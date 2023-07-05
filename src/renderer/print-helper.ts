@@ -148,3 +148,18 @@ export async function getPrintData(imageData: ImageData) {
   return printData;
 }
 
+export async function sendToPrinter(characteristic: any, printData: number[]) {
+  const uint8Array = new Uint8Array(printData);
+  let index = 0;
+  while (true) {
+    if (index + 512 < uint8Array.length) {
+      await characteristic.writeValue(uint8Array.slice(index, index + 512));
+      index += 512;
+    } else if (index < uint8Array.length) {
+      await characteristic.writeValue(uint8Array.slice(index, uint8Array.length));
+      break;
+    } else {
+      break;
+    }
+  }
+}

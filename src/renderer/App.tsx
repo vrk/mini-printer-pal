@@ -1,7 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import burgerDithered from '../../assets/aaron.png--resized.png--dithered.png';
+import burgerDithered from '../../assets/burger-dithered.png';
 import './App.css';
-import { getImageDataForImage, getPrintData } from './print-helper';
+import { getImageDataForImage, getPrintData, sendToPrinter } from './print-helper';
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -23,19 +23,7 @@ function Hello() {
     console.log(characteristic);
     if (imageData) {
       const printData = await getPrintData(imageData);
-      const uint8Array = new Uint8Array(printData);
-      let index = 0;
-      while (true) {
-        if (index + 512 < uint8Array.length) {
-          await characteristic.writeValue(uint8Array.slice(index, index + 512));
-          index += 512;
-        } else if (index < uint8Array.length) {
-          await characteristic.writeValue(uint8Array.slice(index, uint8Array.length));
-          break;
-        } else {
-          break;
-        }
-      }
+      // await sendToPrinter(characteristic, printData);
     }
   };
   return (
