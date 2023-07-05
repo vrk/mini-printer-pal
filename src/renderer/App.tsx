@@ -4,10 +4,14 @@ import './App.css';
 
 function Hello() {
   const onClick = async () => {
-    const devices = await (navigator as any).bluetooth.requestDevice({
+    const [ device ] = await (navigator as any).bluetooth.requestDevice({
       acceptAllDevices: true,
     });
-    console.log(devices);
+    console.log(device);
+    const server = await device.gatt.connect();
+    const service = await server.getPrimaryService(device.id);
+    console.log(service);
+    // const characteristic = await service.getCharacteristic(device.id);
   };
   return (
     <div>
