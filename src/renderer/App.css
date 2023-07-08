@@ -2,6 +2,15 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
+
+ @font-face {
+  font-family: 'Gaegu';
+  src: url(./../../assets/fonts/Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 body {
   position: relative;
   color: white;

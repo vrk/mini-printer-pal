@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain,Tray, Menu } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -133,5 +133,19 @@ app
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
+
+    const iconPath = path.join(__dirname, '../../assets/pengy-bigger.png');
+    const appIcon = new Tray(iconPath)
+    const contextMenu = Menu.buildFromTemplate([
+      { label: 'Item1', type: 'radio' },
+      { label: 'Item2', type: 'radio' }
+    ]);
+  
+    // Make a change to the context menu
+    contextMenu.items[1].checked = false
+  
+    // Call this again for Linux because we modified the context menu
+    appIcon.setContextMenu(contextMenu)
+  
   })
   .catch(console.log);

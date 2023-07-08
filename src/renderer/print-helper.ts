@@ -4,7 +4,19 @@ export function getImageDataForImage(image: HTMLImageElement) {
   const canvas = document.createElement('canvas');
   // Canvas dimensions need to be a multiple of 40 for this printer
   canvas.width = 560;
-  canvas.height = 560;
+
+
+  ///
+  ///
+  ///
+  ///
+  /// **REMEMBER***
+  // NEED TO CHANGE THIS
+  ///
+  ///
+  ///
+  canvas.height = 586;
+
   const context = canvas.getContext("2d");
   if (!context) {
     return null;
@@ -94,7 +106,7 @@ export async function getPrintData(imageData: ImageData) {
           const xVal = x * 8 + bit;
           const yVal = line;
           const rgba = toRgba(imageData, xVal, yVal);
-          console.log(rgba);
+          // console.log(rgba);
           if (rgba.r === 0 && rgba.a !== 0) {
             byte |= 1 << (7 - bit)
           }
