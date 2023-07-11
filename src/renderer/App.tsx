@@ -6,7 +6,7 @@ import {
   getPrintData,
   sendToPrinter,
 } from './print-helper';
-import { Button } from '@vrk/vrk-component-library';
+import { Button, Printer, Toggle } from '@vrk/vrk-component-library';
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -21,11 +21,9 @@ function Hello() {
       acceptAllDevices: true,
       optionalServices: [0xff00],
     });
-    console.log(device);
     const server = await device.gatt.connect();
     const service = await server.getPrimaryService(0xff00);
     const characteristic = await service.getCharacteristic(0xff02);
-    console.log(characteristic);
     if (imageData) {
       const printData = await getPrintData(imageData);
       await sendToPrinter(characteristic, printData);
@@ -33,27 +31,19 @@ function Hello() {
   };
   return (
     <div>
-      <div className="Hello">
-        <img alt="icon" width="280" src={burgerDithered} />
-      </div>
-      <h1>hiiii </h1>
-      <div className="Hello">
-        <label>
-          Your Image File
-          <input
-            type="file"
-            name="myImage"
-            accept="image/*"
-          />
-        </label>
-
-<Button label="hi there"></Button>
-        <button type="button" onClick={onClick}>
-          <span role="img" aria-label="books">
-            📚
-          </span>
-          Read our docs
-        </button>
+      <div id="main">
+        <div id="controls">
+          <Button label="<<"></Button>
+          <Button label="switch photo"></Button>
+          <Toggle isOn={true}></Toggle>
+        </div>
+        <div id="printer">
+          <Printer imgSrc={burgerDithered}></Printer>
+        </div>
+        <div id="printing">
+          <Button label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
+          (or save as png)
+        </div>
       </div>
     </div>
   );

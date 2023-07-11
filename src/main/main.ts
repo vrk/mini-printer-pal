@@ -40,7 +40,7 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDebug) {
-  require('electron-debug')();
+  // require('electron-debug')();
 }
 
 const createWindow = async () => {
@@ -134,18 +134,18 @@ app
       if (mainWindow === null) createWindow();
     });
 
-    const iconPath = path.join(__dirname, '../../assets/pengy-bigger.png');
-    const appIcon = new Tray(iconPath)
-    const contextMenu = Menu.buildFromTemplate([
-      { label: 'Item1', type: 'radio' },
-      { label: 'Item2', type: 'radio' }
-    ]);
+    // const iconPath = path.join(__dirname, '../../assets/pengy-bigger.png');
+    // const appIcon = new Tray(iconPath)
+    // const contextMenu = Menu.buildFromTemplate([
+    //   { label: 'Item1', type: 'radio' },
+    //   { label: 'Item2', type: 'radio' }
+    // ]);
   
-    // Make a change to the context menu
-    contextMenu.items[1].checked = false
+    // // Make a change to the context menu
+    // contextMenu.items[1].checked = false
   
-    // Call this again for Linux because we modified the context menu
-    appIcon.setContextMenu(contextMenu)
+    // // Call this again for Linux because we modified the context menu
+    // appIcon.setContextMenu(contextMenu)
   
   })
   .catch(console.log);
