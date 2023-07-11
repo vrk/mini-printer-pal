@@ -31,6 +31,18 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+ipcMain.on('resize-window', async (event, arg) => {
+  if (mainWindow) {
+    const [ width ] = mainWindow.getSize()
+    if (width < 1024) {
+      mainWindow.setSize(1024, 650);
+    } else {
+      mainWindow.setSize(477, 650);
+    }
+  }
+});
+
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -55,8 +67,9 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 477,
-    height: 728,
+    height: 650,
     icon: getAssetPath('icon.png'),
+    titleBarStyle: 'hidden',
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')

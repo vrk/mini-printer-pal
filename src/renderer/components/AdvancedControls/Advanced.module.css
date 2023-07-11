@@ -1,0 +1,35 @@
+.component {
+  width: calc(1024px - 477px);
+  background: rgba(204, 222, 167,0.5);
+  background-blend-mode: multiply;
+  border-left: 4px dashed white;
+  align-items: center;
+  height: 100%;
+  position: absolute;
+  left: 477px;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 80%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dither {
+  gap: 18px;
+}
+

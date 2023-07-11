@@ -8,7 +8,7 @@ import {
   sendToPrinter,
 } from './print-helper';
 
-import { Button, Toggle, Printer } from "./components";
+import { Button, Toggle, Printer, AdvancedControls } from "./components";
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -34,16 +34,19 @@ function Hello() {
     }
   };
   const onClickToggleControls = () => {
+    // console.log('hi')
+    setShowAdvancedControls(!showAdvancedControls);
 
+    window.electron.ipcRenderer.sendMessage('resize-window');
 
   }
   return (
-    <div>
+    <div id="container">
       <div id="main">
         <div id="controls">
-          <Button onClick={onClickToggleControls} label={showAdvancedControls ? ">>" : "<<"}></Button>
-          <Button label="switch photo"></Button>
           <Toggle isOn={true}></Toggle>
+          <Button label="switch photo"></Button>
+          <Button onClick={onClickToggleControls} label={showAdvancedControls ? "<<" : ">>"}></Button>
         </div>
         <div id="printer">
           <Printer imgSrc={burgerDithered}></Printer>
@@ -53,6 +56,7 @@ function Hello() {
           (or save as png)
         </div>
       </div>
+      {showAdvancedControls ? <AdvancedControls></AdvancedControls> : null}
     </div>
   );
 }

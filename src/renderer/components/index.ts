@@ -1,3 +1,4 @@
+export { default as AdvancedControls } from './AdvancedControls';
 export { default as Button } from './Button';
 export { default as CloudHeader } from './CloudHeader';
 export { default as DitherButton } from './DitherButton';

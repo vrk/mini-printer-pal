@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 
 export interface DitherButtonProps {
   label: string;
-  ditherStyle?: "atikinson"|"burkes"|"falsefloyd"|"floydsteinberg"|"jarvis"|"sierralite"|"sierra"|"stucki"|"twosierra";
+  ditherStyle?: "atkinson"|"burkes"|"falsefloyd"|"floydsteinberg"|"jarvis"|"sierralite"|"sierra"|"stucki"|"twosierra";
 }
 
 const DitherButton = ({

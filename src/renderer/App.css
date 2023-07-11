@@ -10,6 +10,14 @@
   font-style: normal;
 }
 
+#root {
+  width: 100%;
+}
+
+button {
+  -webkit-app-region: no-drag;
+}
+
 body * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -28,10 +36,24 @@ body {
   background-size: 25px 25px;
 }
 
+#container {
+}
+
 #main {
+  position: absolute;
+  top: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 477px;
+  flex-shrink: 0;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+
+#controls {
+  width: 325px;
 }
 
 #printer,
