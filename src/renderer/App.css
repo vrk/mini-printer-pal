@@ -5,7 +5,7 @@
 
  @font-face {
   font-family: 'Gaegu';
-  src: url(./../../assets/fonts/Gaegu-Regular.ttf) format('truetype');
+  src: url(../../assets/fonts/Gaegu-Regular.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,17 +15,13 @@ body {
   position: relative;
   color: white;
   height: 100vh;
-  background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  );
   font-family: sans-serif;
-  overflow-y: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
+  background: url(../../assets/bg.png);
+  background-size: 25px 25px;
 }
 
 button {

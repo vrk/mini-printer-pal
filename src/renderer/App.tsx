@@ -6,6 +6,7 @@ import {
   getPrintData,
   sendToPrinter,
 } from './print-helper';
+import { Button } from '@vrk/vrk-component-library';
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -46,6 +47,7 @@ function Hello() {
           />
         </label>
 
+<Button label="hi there"></Button>
         <button type="button" onClick={onClick}>
           <span role="img" aria-label="books">
             📚
