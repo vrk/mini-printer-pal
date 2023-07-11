@@ -56,7 +56,7 @@ function Hello() {
           (or save as png)
         </div>
       </div>
-      {showAdvancedControls ? <AdvancedControls></AdvancedControls> : null}
+      <AdvancedControls></AdvancedControls>
     </div>
   );
 }

@@ -31,7 +31,7 @@ body {
   margin: 0;
   justify-content: center;
   align-items: center;
-  /* overflow-y: hidden; */
+  overflow: hidden;
   background: url(../../assets/bg.png);
   background-size: 25px 25px;
 }

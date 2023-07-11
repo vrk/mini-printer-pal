@@ -3,6 +3,7 @@ import styles from './Advanced.module.css'; // Import css modules stylesheet as 
 import CloudHeader from "../CloudHeader/CloudHeader";
 import DitherButton from "../DitherButton/DitherButton";
 import Button from "../Button/Button";
+import Slider from "../Slider/Slider";
 
 export interface FileProps {
 }
@@ -24,9 +25,20 @@ const File = ({
     <div className={styles.row}>
       <div className={styles.column}>
         <CloudHeader label="print size"></CloudHeader>
+        <Slider icon="size"></Slider>
       </div>
       <div className={styles.column}>
         <CloudHeader label="paper size"></CloudHeader>
+      </div>
+    </div>
+    <div className={styles.row}>
+      <div className={styles.column}>
+        <CloudHeader label="print size"></CloudHeader>
+        <Slider icon="brightness"></Slider>
+      </div>
+      <div className={styles.column}>
+        <CloudHeader label="contrast"></CloudHeader>
+        <Slider icon="contrast"></Slider>
       </div>
     </div>
   </div>

@@ -15,6 +15,8 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
+const WINDOW_HEIGHT = 700;
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -35,9 +37,9 @@ ipcMain.on('resize-window', async (event, arg) => {
   if (mainWindow) {
     const [ width ] = mainWindow.getSize()
     if (width < 1024) {
-      mainWindow.setSize(1024, 650);
+      mainWindow.setSize(1024, WINDOW_HEIGHT);
     } else {
-      mainWindow.setSize(477, 650);
+      mainWindow.setSize(477, WINDOW_HEIGHT);
     }
   }
 });
@@ -67,7 +69,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 477,
-    height: 650,
+    height: WINDOW_HEIGHT,
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     webPreferences: {
