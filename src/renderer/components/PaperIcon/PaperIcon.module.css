@@ -1,0 +1,7 @@
+.component {
+  box-sizing: border-box;
+  background-color: white;
+  border: 3px solid #C3846C;
+  height: 40px;
+  box-shadow: -2px 2px 0px 0px #A6BF73;
+}

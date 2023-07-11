@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Gaegu';
+  src: url(./../../assets/fonts/Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.component {
+  font-family: "Gaegu", monospace;
+  font-size: 24px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  -webkit-font-smoothing: antialiased;
+  border: 2px solid #FFC0E0;
+  min-width: 100px;
+}
+
+.component option {
+  font-family: "Gaegu", monospace;
+  font-size: 24px;
+  background-color: white;
+}

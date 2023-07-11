@@ -1,0 +1,44 @@
+.component {
+  display: inline;
+}
+
+.component [type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  appearance: none;
+  display: none;
+}
+
+.component label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 50px;
+  height: 25px;
+  background: #E5F2D1;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+
+.component label:after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 30%;
+  height: 60%;
+  background: #A6BF73;
+  border-radius: 90%;
+  transition: 0.3s;
+}
+
+.component input:checked + label {
+  /* change to change bg when "on" */
+  background: #E5F2D1;
+}
+
+.component input:checked + label:after {
+  left: calc(100% - 10%);
+  transform: translateX(-100%);
+}

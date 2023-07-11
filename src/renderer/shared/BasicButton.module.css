@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Gaegu';
+  src: url(../assets/fonts/Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.button,
+input.button::file-selector-button
+{
+  cursor: pointer;
+  font-family: "Gaegu", monospace;
+  border-radius: 5px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pink,
+input.pink::file-selector-button {
+  color: #F15AA3;
+  border: 1px solid #D4126F;
+  background: #ffe6f2;
+  box-shadow: 0px -3px 0px 0px #F2A6CC inset, -2px 2px 0px 0px white inset;
+}
+
+.yellow,
+input.yellow::file-selector-button {
+  color: #84433B;
+  border: 1px solid #84433B;
+  background: #FDE5B4;
+  box-shadow: 0px -3px 0px 0px #F9A806 inset, -2px 2px 0px 0px white inset;
+}
+
+
+.yellow:active,
+input.yellow::file-selector-button {
+  box-shadow: 0px -3px 0px 0px white inset, -2px 2px 0px 0px #F9A806 inset;
+}
+
+.pink:active,
+input.pink::file-selector-button {
+  box-shadow: 0px -3px 0px 0px white inset, -2px 2px 0px 0px #F2A6CC inset;
+}

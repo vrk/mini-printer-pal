@@ -20,6 +20,7 @@ body {
   height: 100vh;
   font-family: 'Gaegu';
   display: flex;
+  margin: 0;
   justify-content: center;
   align-items: center;
   /* overflow-y: hidden; */

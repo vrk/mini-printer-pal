@@ -1,0 +1,31 @@
+.component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.component .icon {
+  height: 72px;
+  width: 72px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 2px;
+  border-top: 2px solid #FFF;
+  border-right: 2px solid #FFF;
+  border-left: 2px solid #FFF;
+  box-sizing: border-box;
+}
+
+.component .icon.floydsteinberg {
+  background-image: url(./dithers/floyd-steinberg.png);
+}
+
+.component .icon.atkinson {
+  background-image: url(./dithers/atkinson.png);
+}
+
+.component .icon.jarvis {
+  background-image: url(./dithers/jarvis.png);
+}

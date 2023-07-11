@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Gaegu';
+  src: url(./../../assets/fonts/Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.button {
+  font-family: "Gaegu", monospace;
+  border-radius: 5px;
+  -webkit-font-smoothing: antialiased;
+}
+

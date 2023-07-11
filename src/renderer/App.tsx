@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import burgerDithered from '../../assets/aaron.png--resized.png--dithered.png';
 import './App.css';
@@ -6,7 +7,8 @@ import {
   getPrintData,
   sendToPrinter,
 } from './print-helper';
-import { Button, Printer, Toggle } from '@vrk/vrk-component-library';
+
+import { Button, Toggle, Printer } from "./components";
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -16,6 +18,8 @@ image.onload = () => {
 image.src = burgerDithered;
 
 function Hello() {
+  const [showAdvancedControls, setShowAdvancedControls] = useState(false);
+
   const onClick = async () => {
     const device = await (navigator as any).bluetooth.requestDevice({
       acceptAllDevices: true,
@@ -29,11 +33,15 @@ function Hello() {
       await sendToPrinter(characteristic, printData);
     }
   };
+  const onClickToggleControls = () => {
+
+
+  }
   return (
     <div>
       <div id="main">
         <div id="controls">
-          <Button label="<<"></Button>
+          <Button onClick={onClickToggleControls} label={showAdvancedControls ? ">>" : "<<"}></Button>
           <Button label="switch photo"></Button>
           <Toggle isOn={true}></Toggle>
         </div>

@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'Gaegu';
+  src: url(./../../assets/fonts/Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.component {
+  color: black;
+  font-family: "Gaegu", monospace;
+  font-size: 28px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 91px;
+  width: 183px;
+  background-image: url(./cloud.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.component span {
+  position: relative;
+  top: -2px;
+}
+
