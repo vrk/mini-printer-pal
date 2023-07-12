@@ -9,11 +9,13 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain,Tray, Menu } from 'electron';
+import { dialog, app, BrowserWindow, shell, ipcMain,Tray, Menu } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import fs from 'fs';
+
 
 const WINDOW_HEIGHT = 700;
 
@@ -42,6 +44,20 @@ ipcMain.on('resize-window', async (event, arg) => {
       mainWindow.setSize(477, WINDOW_HEIGHT);
     }
   }
+});
+
+ipcMain.on("choose-file", async (event, arg) => {
+  const result = await dialog.showOpenDialog({
+    properties: ["openFile"],
+    filters: [{ name: "Images", extensions: ["png","jpg","jpeg"] }]
+  });
+
+  console.log(result);
+  const { canceled, filePaths } = result;
+  const fileData = await fs.promises.readFile(filePaths[0])
+  const base64 = fileData.toString('base64');
+  console.log(base64);
+  event.reply("file-chosen", base64);
 });
 
 
