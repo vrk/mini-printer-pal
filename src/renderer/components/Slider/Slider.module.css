@@ -1,4 +1,5 @@
 input[type=range].component {
+  background-color: transparent;
   height: 39px;
   -webkit-appearance: none;
   margin: 10px 0;
@@ -20,7 +21,7 @@ input[type=range].component::-webkit-slider-runnable-track {
 input[type=range].component::-webkit-slider-thumb {
   height: 36px;
   width: 36px;
-  border-radius: 0px;
+  border-radius: 0;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -14px;

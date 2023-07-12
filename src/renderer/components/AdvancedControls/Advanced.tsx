@@ -4,6 +4,7 @@ import CloudHeader from "../CloudHeader/CloudHeader";
 import DitherButton from "../DitherButton/DitherButton";
 import Button from "../Button/Button";
 import Slider from "../Slider/Slider";
+import PaperIcon from "../PaperIcon/PaperIcon"
 
 export interface FileProps {
 }
@@ -29,11 +30,16 @@ const File = ({
       </div>
       <div className={styles.column}>
         <CloudHeader label="paper size"></CloudHeader>
+        <div className={styles.row}>
+          <PaperIcon size="large"></PaperIcon>
+          <PaperIcon size="medium"></PaperIcon>
+          <PaperIcon size="small"></PaperIcon>
+        </div>
       </div>
     </div>
     <div className={styles.row}>
       <div className={styles.column}>
-        <CloudHeader label="print size"></CloudHeader>
+        <CloudHeader label="brightness"></CloudHeader>
         <Slider icon="brightness"></Slider>
       </div>
       <div className={styles.column}>
