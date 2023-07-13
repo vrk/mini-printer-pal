@@ -31,7 +31,6 @@ let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
@@ -52,11 +51,9 @@ ipcMain.on("choose-file", async (event, arg) => {
     filters: [{ name: "Images", extensions: ["png","jpg","jpeg"] }]
   });
 
-  console.log(result);
   const { canceled, filePaths } = result;
   const fileData = await fs.promises.readFile(filePaths[0])
   const base64 = fileData.toString('base64');
-  console.log(base64);
   event.reply("file-chosen", base64);
 });
 

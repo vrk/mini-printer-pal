@@ -45,20 +45,13 @@ export class Photo {
     const originalImageWidth = this.imageElement.width;
     this.canvas.width = IMAGE_WIDTH;
     this.canvas.height = originalImageHeight * IMAGE_WIDTH / originalImageWidth;
-    // this.canvas = document.createElement('canvas');
-    // this.canvas.width = this.imageElement.width;
-    // this.canvas.height = this.imageElement.height;
-    // console.log(this.imageElement, this.imageElement.height)
-    // this.context = this.canvas.getContext('2d')!;
     this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
-    // console.log(this.canvas)
   }
 
   private async loadImageToImageElement(imageSrc: string) {
     return new Promise<void>((resolve) => {
       this.imageElement.src = imageSrc;
       this.imageElement.onload = () => {
-        console.log('hiiiiii it is load');
         resolve();
       };
     });

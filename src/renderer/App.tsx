@@ -24,6 +24,7 @@ function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
+
   const photo = new Photo(imageSrcData);
   if (imageSrcData.length !== 0) {
     photo.loadImage().then(() => {
@@ -44,8 +45,8 @@ function Hello() {
       await sendToPrinter(characteristic, printData);
     }
   };
+
   const onClickToggleControls = () => {
-    // console.log('hi')
     setShowAdvancedControls(!showAdvancedControls);
     window.electron.ipcRenderer.sendMessage('resize-window');
   }
