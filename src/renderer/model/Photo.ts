@@ -15,6 +15,28 @@
     - getDitheredImageSrc()
     - getPrintPayload()
  */
+
+import {
+  canvas2d,
+  GRAY_ALPHA8,
+  imagePromise,
+  IntBuffer,
+  intBufferFromCanvas,
+} from "@thi.ng/pixel";
+import {
+  ATKINSON,
+  BURKES,
+  DIFFUSION_2D,
+  DIFFUSION_COLUMN,
+  DIFFUSION_ROW,
+  ditherWith,
+  FLOYD_STEINBERG,
+  JARVIS_JUDICE_NINKE,
+  SIERRA2,
+  STUCKI,
+  THRESHOLD,
+  type DitherKernel,
+} from "@thi.ng/pixel-dither";    
   
 const BYTES_PER_LINE = 70;
 const IMAGE_WIDTH = BYTES_PER_LINE * 8;
@@ -29,13 +51,15 @@ export class Photo {
   private canvas: HTMLCanvasElement;
   private imageElement: HTMLImageElement;
   private context: CanvasRenderingContext2D;
+  private kernel?: DitherKernel|null;
 
 
-  constructor(imageSrc: string) {
+  constructor(imageSrc: string, kernel: DitherKernel|null = null) {
     this.imageSrc = imageSrc;
     this.imageElement = new Image();
     this.canvas = document.createElement('canvas')
     this.context = this.canvas.getContext('2d')!;
+    this.kernel = kernel;
   }
 
   async loadImage() {
@@ -46,6 +70,14 @@ export class Photo {
     this.canvas.width = IMAGE_WIDTH;
     this.canvas.height = originalImageHeight * IMAGE_WIDTH / originalImageWidth;
     this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
+    if (!this.kernel) {
+      // this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
+      return;
+    }
+    const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
+    ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
+    // ditherWith(this.kernel, intBuffer.copy(), { channels: [1, 2, 3], threshold: 0.66, bleed: 0.75 });
+
   }
 
   private async loadImageToImageElement(imageSrc: string) {

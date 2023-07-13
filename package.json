@@ -103,6 +103,7 @@
   },
   "dependencies": {
     "@thi.ng/api": "^8.8.2",
+    "@thi.ng/pixel": "^4.2.7",
     "@thi.ng/pixel-dither": "^1.1.58",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",

@@ -11,6 +11,20 @@ import {
 
 import { Button, Toggle, Printer, AdvancedControls } from "./components";
 import { Photo } from './model/Photo';
+import {
+  ATKINSON,
+  BURKES,
+  DIFFUSION_2D,
+  DIFFUSION_COLUMN,
+  DIFFUSION_ROW,
+  ditherWith,
+  FLOYD_STEINBERG,
+  JARVIS_JUDICE_NINKE,
+  SIERRA2,
+  STUCKI,
+  THRESHOLD,
+  type DitherKernel,
+} from "@thi.ng/pixel-dither";    
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -25,7 +39,7 @@ function Hello() {
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
 
-  const photo = new Photo(imageSrcData);
+  const photo = new Photo(imageSrcData, FLOYD_STEINBERG);
   if (imageSrcData.length !== 0) {
     photo.loadImage().then(() => {
       setCanvasDataSrc(photo.getCanvasDataUrl());
