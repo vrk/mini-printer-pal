@@ -5,8 +5,10 @@ import DitherButton from "../DitherButton/DitherButton";
 import Button from "../Button/Button";
 import Slider from "../Slider/Slider";
 import PaperIcon from "../PaperIcon/PaperIcon"
+import { DitherKernel } from "@thi.ng/pixel-dither";
 
 export interface FileProps {
+  setDitherKernel?: React.Dispatch<React.SetStateAction<DitherKernel>>;
 }
 
 const File = ({
@@ -22,7 +24,13 @@ const File = ({
         <DitherButton label="extreme" ditherStyle="atkinson"></DitherButton>
         <Button label="more" topBottomPadding={0} leftRightPadding={10}></Button>
       </div>
+      <FileControls />
     </div>
+  </div>
+}
+
+const FileControls = () => {
+  return <>
     <div className={styles.row}>
       <div className={styles.column}>
         <CloudHeader label="print size"></CloudHeader>
@@ -47,7 +55,7 @@ const File = ({
         <Slider icon="contrast"></Slider>
       </div>
     </div>
-  </div>
+  </>
 }
 
 export default File;

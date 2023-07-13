@@ -15,8 +15,16 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import fs from 'fs';
+import contextMenu from 'electron-context-menu';
+
+contextMenu({
+	showSaveImageAs: true
+});
 
 
+
+const WINDOW_WIDTH_SMALL = 477;
+const WINDOW_WIDTH_LARGE = 1024;
 const WINDOW_HEIGHT = 700;
 
 class AppUpdater {
@@ -37,10 +45,11 @@ ipcMain.on('ipc-example', async (event, arg) => {
 ipcMain.on('resize-window', async (event, arg) => {
   if (mainWindow) {
     const [ width ] = mainWindow.getSize()
-    if (width < 1024) {
-      mainWindow.setSize(1024, WINDOW_HEIGHT);
+    // TODO: fix hack
+    if (width < WINDOW_WIDTH_LARGE) {
+      mainWindow.setSize(WINDOW_WIDTH_LARGE, WINDOW_HEIGHT);
     } else {
-      mainWindow.setSize(477, WINDOW_HEIGHT);
+      mainWindow.setSize(WINDOW_WIDTH_SMALL, WINDOW_HEIGHT);
     }
   }
 });
@@ -81,7 +90,7 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 477,
+    width: WINDOW_WIDTH_LARGE,
     height: WINDOW_HEIGHT,
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',

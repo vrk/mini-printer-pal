@@ -16,6 +16,8 @@
 
 label,
 input,
+img,
+canvas,
 button {
   -webkit-app-region: no-drag;
 }
