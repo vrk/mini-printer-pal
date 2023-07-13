@@ -3,13 +3,14 @@
   background: rgba(204, 222, 167,0.5);
   background-blend-mode: multiply;
   border-left: 4px dashed white;
-  align-items: center;
+  /* align-items: center; */
   height: 100%;
   position: absolute;
   left: 477px;
   top: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-top: 10px;
   align-items: center;
   flex-direction: column;
   gap: 25px;
@@ -34,3 +35,8 @@
   gap: 18px;
 }
 
+.ditherOpen {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 80%;;
+}

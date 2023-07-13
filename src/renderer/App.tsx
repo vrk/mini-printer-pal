@@ -94,7 +94,7 @@ function Hello() {
           (or save as png)
         </div>
       </div>
-      <AdvancedControls></AdvancedControls>
+      <AdvancedControls setDitherKernel={setDitherKernel}></AdvancedControls>
     </div>
   );
 }

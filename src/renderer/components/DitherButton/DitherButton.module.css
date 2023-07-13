@@ -18,14 +18,42 @@
   box-sizing: border-box;
 }
 
-.component .icon.floydsteinberg {
-  background-image: url(./dithers/floyd-steinberg.png);
+.component .icon.floyd {
+  background-image: url(./newdithers/floyd.png);
 }
 
 .component .icon.atkinson {
-  background-image: url(./dithers/atkinson.png);
+  background-image: url(./newdithers/atkinson.png);
 }
 
 .component .icon.jarvis {
-  background-image: url(./dithers/jarvis.png);
+  background-image: url(./newdithers/jarvis.png);
+}
+
+.component .icon.burkes {
+  background-image: url(./newdithers/burkes.png);
+}
+
+.component .icon.diff2d {
+  background-image: url(./newdithers/diff2d.png);
+}
+
+.component .icon.diffcol {
+  background-image: url(./newdithers/diffcol.png);
+}
+
+.component .icon.diffrow {
+  background-image: url(./newdithers/diffrow.png);
+}
+
+.component .icon.sierra2 {
+  background-image: url(./newdithers/sierra2.png);
+}
+
+.component .icon.stucki {
+  background-image: url(./newdithers/stucki.png);
+}
+
+.component .icon.threshold {
+  background-image: url(./newdithers/threshold.png);
 }
