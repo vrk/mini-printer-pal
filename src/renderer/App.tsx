@@ -38,8 +38,11 @@ function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   const [imageSrcData, setImageSrcData] = useState(pengy);
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
+  const [ditherKernel, setDitherKernel] = useState(FLOYD_STEINBERG);
+  const [isDitherOn, setIsDitherOn] = useState(true);
 
-  const photo = new Photo(imageSrcData, FLOYD_STEINBERG);
+  console.log("hey", isDitherOn);
+  const photo = new Photo(imageSrcData, isDitherOn ? ditherKernel : null);
   if (imageSrcData.length !== 0) {
     photo.loadImage().then(() => {
       setCanvasDataSrc(photo.getCanvasDataUrl());
@@ -76,7 +79,10 @@ function Hello() {
     <div id="container">
       <div id="main">
         <div id="controls">
-          <Toggle isOn={true}></Toggle>
+          <Toggle onClick={() => { 
+            console.log("hi", isDitherOn);
+            setIsDitherOn(!isDitherOn)
+          }} isOn={isDitherOn}></Toggle>
           <Button label="switch photo" onClick={onClickSwitchPhoto}></Button>
           <Button onClick={onClickToggleControls} label={showAdvancedControls ? "<<" : ">>"}></Button>
         </div>
