@@ -25,6 +25,7 @@ import {
   THRESHOLD,
   type DitherKernel,
 } from "@thi.ng/pixel-dither";    
+import pengy from "../../assets/pengyface.png"; 
 
 let imageData: ImageData | null = null;
 const image = new Image();
@@ -33,10 +34,9 @@ image.onload = () => {
 };
 image.src = burgerDithered;
 
-
 function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
-  const [imageSrcData, setImageSrcData] = useState("");
+  const [imageSrcData, setImageSrcData] = useState(pengy);
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
 
   const photo = new Photo(imageSrcData, FLOYD_STEINBERG);

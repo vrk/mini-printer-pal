@@ -76,8 +76,6 @@ export class Photo {
     }
     const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
     ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
-    // ditherWith(this.kernel, intBuffer.copy(), { channels: [1, 2, 3], threshold: 0.66, bleed: 0.75 });
-
   }
 
   private async loadImageToImageElement(imageSrc: string) {
