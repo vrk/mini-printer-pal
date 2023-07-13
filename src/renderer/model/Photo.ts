@@ -63,7 +63,6 @@ export class Photo {
   }
 
   async loadImage() {
-    console.log("LOADING")
     await this.loadImageToImageElement(this.imageSrc);
     const originalImageHeight = this.imageElement.height;
     const originalImageWidth = this.imageElement.width;
@@ -94,5 +93,9 @@ export class Photo {
   }
   getCanvas(): HTMLElement {
     return this.canvas as HTMLElement;
+  }
+
+  getImageData() {
+    return this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
   }
 }

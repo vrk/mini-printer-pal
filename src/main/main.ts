@@ -122,7 +122,6 @@ const createWindow = async () => {
     'select-bluetooth-device',
     (event, deviceList, callback) => {
       event.preventDefault();
-      console.log(deviceList);
       const result = deviceList.find((device) => {
         return device.deviceName === 'M02S';
       });

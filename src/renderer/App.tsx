@@ -27,12 +27,12 @@ import {
 } from "@thi.ng/pixel-dither";    
 import pengy from "../../assets/pengyface.png"; 
 
-let imageData: ImageData | null = null;
-const image = new Image();
-image.onload = () => {
-  imageData = getImageDataForImage(image);
-};
-image.src = burgerDithered;
+// let imageData: ImageData | null = null;
+// const image = new Image();
+// image.onload = () => {
+//   imageData = getImageDataForImage(image);
+// };
+// image.src = burgerDithered;
 
 function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
@@ -41,10 +41,11 @@ function Hello() {
   const [ditherKernel, setDitherKernel] = useState(FLOYD_STEINBERG);
   const [isDitherOn, setIsDitherOn] = useState(true);
 
-  console.log("hey", isDitherOn);
   const photo = new Photo(imageSrcData, isDitherOn ? ditherKernel : null);
+  let imageData: null|ImageData = null;
   if (imageSrcData.length !== 0) {
     photo.loadImage().then(() => {
+      imageData = photo.getImageData();
       setCanvasDataSrc(photo.getCanvasDataUrl());
     });
   }
@@ -90,7 +91,7 @@ function Hello() {
           <Printer imgSrc={canvasDataSrc}></Printer>
         </div>
         <div id="printing">
-          <Button label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
+          <Button onClick={onClick} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
           (or save as png)
         </div>
       </div>

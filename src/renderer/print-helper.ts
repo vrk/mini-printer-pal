@@ -106,7 +106,6 @@ export async function getPrintData(imageData: ImageData) {
           const xVal = x * 8 + bit;
           const yVal = line;
           const rgba = toRgba(imageData, xVal, yVal);
-          // console.log(rgba);
           if (rgba.r === 0 && rgba.a !== 0) {
             byte |= 1 << (7 - bit)
           }
@@ -162,11 +161,12 @@ export async function getPrintData(imageData: ImageData) {
 
 export async function sendToPrinter(characteristic: any, printData: number[]) {
   const uint8Array = new Uint8Array(printData);
+  const size = 512
   let index = 0;
   while (true) {
-    if (index + 512 < uint8Array.length) {
-      await characteristic.writeValue(uint8Array.slice(index, index + 512));
-      index += 512;
+    if (index + size < uint8Array.length) {
+      await characteristic.writeValue(uint8Array.slice(index, index + size));
+      index += size;
     } else if (index < uint8Array.length) {
       await characteristic.writeValue(uint8Array.slice(index, uint8Array.length));
       break;
