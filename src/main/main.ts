@@ -16,7 +16,6 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import fs from 'fs';
 import contextMenu from 'electron-context-menu';
-import noble from "@abandonware/noble";
 
 contextMenu({
 	showSaveImageAs: true
@@ -42,23 +41,6 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   event.reply('ipc-example', msgTemplate('pong'));
 });
-
-ipcMain.on('print-file', async (event, data: number[]) => {
-  
-  const characteristic = await getWritableCharacteristic(discoveredDevices['M02S']);
-  characteristic.write(Buffer.from(data), true);
-})
-  
-async function getWritableCharacteristic(peripheral: noble.Peripheral) {
-  await peripheral.connectAsync();
-  const results = await peripheral.discoverAllServicesAndCharacteristicsAsync();
-  const { characteristics } = results;
-  console.log(results, characteristics);
-  const [characteristic] = characteristics.filter(characteristic => { 
-    return characteristic.properties.includes('write');
-  })
-  return characteristic;
-}
 
 ipcMain.on('resize-window', async (event, arg) => {
   if (mainWindow) {
@@ -105,8 +87,6 @@ const createWindow = async () => {
   const getAssetPath = (...paths: string[]): string => {
     return path.join(RESOURCES_PATH, ...paths);
   };
-
-  scanDevices();
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -205,31 +185,3 @@ app
   
   })
   .catch(console.log);
-
-type Devices = {
-  [key: string]: noble.Peripheral;
-};
-  
-let discoveredDevices: Devices = {};
-async function scanDevices(scanDurationInMs=5000) {
-  discoveredDevices = {};
-
-  noble.on('discover', async (peripheral) => {
-    const { localName } = peripheral.advertisement;
-    if (localName === undefined || localName.trim().length === 0) {
-      return;
-    }
-    console.log(localName);
-    discoveredDevices[localName] = peripheral;
-  });
-  noble.startScanningAsync();
-
-  await delay(scanDurationInMs);
-
-  await noble.stopScanningAsync();
-}
-
-
-function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}

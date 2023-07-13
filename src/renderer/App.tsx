@@ -51,18 +51,16 @@ function Hello() {
   }
 
   const onClick = async () => {
-    // const device = await (navigator as any).bluetooth.requestDevice({
-    //   acceptAllDevices: true,
-    //   optionalServices: [0xff00],
-    // });
-    // const server = await device.gatt.connect();
-    // const service = await server.getPrimaryService(0xff00);
-    // const characteristic = await service.getCharacteristic(0xff02);
-
+    const device = await (navigator as any).bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: [0xff00],
+    });
+    const server = await device.gatt.connect();
+    const service = await server.getPrimaryService(0xff00);
+    const characteristic = await service.getCharacteristic(0xff02);
     if (imageData) {
       const printData = await getPrintData(imageData);
-      // await sendToPrinter(characteristic, printData);
-      window.electron.ipcRenderer.sendMessage('print-file', printData);
+      await sendToPrinter(characteristic, printData);
     }
   };
 
