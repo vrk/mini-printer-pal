@@ -1,5 +1,14 @@
 const BYTES_PER_LINE = 70;
 
+function toRgba(imageData: ImageData, x: number, y: number) {
+  const { data, width } = imageData;
+  const r = data[((width * y) + x) * 4];
+  const g = data[((width * y) + x) * 4 + 1];
+  const b = data[((width * y) + x) * 4 + 2];
+  const a = data[((width * y) + x) * 4 + 3];
+  return { r, g, b, a}
+}
+
 export async function getPrintData(imageData: ImageData) {
   // const pic = await Jimp.read(printableImgPath)
   // let remaining = pic.bitmap.height;
@@ -76,7 +85,7 @@ export async function getPrintData(imageData: ImageData) {
             byte |= 1 << (7 - bit)
           }
         }
-        // Doesn't seem necessary?
+        // Maybe not needed?
         // if (byte === 0x0a) {
         //   byte = 0x14;
         // }
