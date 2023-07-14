@@ -40,8 +40,9 @@ function Hello() {
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
   const [ditherKernel, setDitherKernel] = useState(FLOYD_STEINBERG);
   const [isDitherOn, setIsDitherOn] = useState(true);
+  const [scaledImagePercentage, setScaledImagePercentage] = useState(100.0);
 
-  const photo = new Photo(imageSrcData, isDitherOn ? ditherKernel : null);
+  const photo = new Photo(imageSrcData, isDitherOn ? ditherKernel : null, scaledImagePercentage);
   let imageData: null|ImageData = null;
   if (imageSrcData.length !== 0) {
     photo.loadImage().then(() => {
@@ -97,7 +98,10 @@ function Hello() {
           (or save as png)
         </div>
       </div>
-      <AdvancedControls setDitherKernel={setDitherKernel}></AdvancedControls>
+      <AdvancedControls
+        setDitherKernel={setDitherKernel}
+        setScaledImagePercentage={setScaledImagePercentage}
+      ></AdvancedControls>
     </div>
   );
 }

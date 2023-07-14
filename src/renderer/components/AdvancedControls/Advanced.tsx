@@ -25,6 +25,7 @@ import { STATUS_CODES } from "http";
 
 export interface FileProps {
   setDitherKernel: React.Dispatch<React.SetStateAction<DitherKernel>>;
+  setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const dithers = [
@@ -81,7 +82,8 @@ const dithers = [
 ];
 
 const File = ({
-  setDitherKernel
+  setDitherKernel,
+  setScaledImagePercentage
 }: FileProps) => {
   const [showAllDithers, setShowAllDithers] = useState(false);
   const maxDithersToShow = showAllDithers ? dithers.length : 3;
@@ -101,16 +103,26 @@ const File = ({
         <Button className={styles.more} onClick={ () => setShowAllDithers(!showAllDithers) } label={showAllDithers ? "close" : "more"} topBottomPadding={0} leftRightPadding={10}></Button>
       </div>
     </div>
-    {showAllDithers ? null : <FileControls />}
+    {showAllDithers ? null : <FileControls setScaledImagePercentage={setScaledImagePercentage} />}
   </div>
 }
 
-const FileControls = () => {
+interface FileControlsProps {
+  setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const FileControls = ({
+  setScaledImagePercentage
+}: FileControlsProps) => {
   return <>
     <div className={styles.row}>
       <div className={styles.column}>
         <CloudHeader label="print size"></CloudHeader>
-        <Slider icon="size"></Slider>
+        <Slider min={1} max={100} step={1} onChange={ 
+          (event: React.ChangeEvent<HTMLInputElement>) => {
+            setScaledImagePercentage(event.currentTarget.valueAsNumber)
+          }
+        } icon="size"></Slider>
       </div>
       <div className={styles.column}>
         <CloudHeader label="paper size"></CloudHeader>

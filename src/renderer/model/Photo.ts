@@ -52,14 +52,17 @@ export class Photo {
   private imageElement: HTMLImageElement;
   private context: CanvasRenderingContext2D;
   private kernel?: DitherKernel|null;
+  private scaledImagePercentage: number;
 
 
-  constructor(imageSrc: string, kernel: DitherKernel|null = null) {
+  constructor(imageSrc: string, kernel: DitherKernel|null = null, scaledImagePercentage: number) {
     this.imageSrc = imageSrc;
     this.imageElement = new Image();
     this.canvas = document.createElement('canvas')
     this.context = this.canvas.getContext('2d')!;
     this.kernel = kernel;
+    this.scaledImagePercentage = scaledImagePercentage;
+    console.log(scaledImagePercentage)
   }
 
   async loadImage() {
@@ -67,8 +70,12 @@ export class Photo {
     const originalImageHeight = this.imageElement.height;
     const originalImageWidth = this.imageElement.width;
     this.canvas.width = IMAGE_WIDTH;
-    this.canvas.height = originalImageHeight * IMAGE_WIDTH / originalImageWidth;
-    this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
+    const scalePercentage = Math.max(this.scaledImagePercentage / 100.0, 0.01); 
+
+    const scaledImageWidth = IMAGE_WIDTH * scalePercentage;
+    this.canvas.height = originalImageHeight * scaledImageWidth / originalImageWidth;
+    const startDrawX = IMAGE_WIDTH - scaledImageWidth; 
+    this.context.drawImage(this.imageElement, startDrawX, 0, scaledImageWidth, this.canvas.height);
     if (!this.kernel) {
       // this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
       return;
