@@ -271,8 +271,5 @@
       "src/main/**"
     ],
     "logLevel": "quiet"
-  },
-  "resolutions": {
-    "**/node-abi": "^3.2.0"
   }
 }
