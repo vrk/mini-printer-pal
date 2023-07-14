@@ -38,15 +38,20 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+let characteristic: noble.Characteristic | null = null;
+
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
 ipcMain.on('print-file', async (event, data: number[]) => {
-  
-  const characteristic = await getWritableCharacteristic(discoveredDevices['M02S']);
-  characteristic.write(Buffer.from(data), true);
+  if (!characteristic) {
+    characteristic = await getWritableCharacteristic(discoveredDevices['M02S']);
+  }
+  characteristic.write(Buffer.from(data), false, (error: string) => {
+    console.log('done', error);
+  });
 })
   
 async function getWritableCharacteristic(peripheral: noble.Peripheral) {

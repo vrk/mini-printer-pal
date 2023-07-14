@@ -31,6 +31,8 @@ export interface FileProps {
   setBrightness: React.Dispatch<React.SetStateAction<number>>;
   contrast: number;
   setContrast: React.Dispatch<React.SetStateAction<number>>;
+  paperSize: string;
+  setPaperSize: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const dithers = [
@@ -93,7 +95,9 @@ const File = ({
   brightness,
   setBrightness,
   contrast,
-  setContrast
+  setContrast,
+  paperSize,
+  setPaperSize
 }: FileProps) => {
   const [showAllDithers, setShowAllDithers] = useState(false);
   const maxDithersToShow = showAllDithers ? dithers.length : 3;
@@ -120,6 +124,8 @@ const File = ({
         setBrightness={setBrightness}
         contrast={contrast}
         setContrast={setContrast}
+        paperSize={paperSize}
+        setPaperSize={setPaperSize}
       />
     }
   </div>
@@ -132,6 +138,8 @@ interface FileControlsProps {
   setBrightness: React.Dispatch<React.SetStateAction<number>>;
   contrast: number;
   setContrast: React.Dispatch<React.SetStateAction<number>>;
+  paperSize: string;
+  setPaperSize: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const FileControls = ({
@@ -140,7 +148,9 @@ const FileControls = ({
   brightness,
   setBrightness,
   contrast,
-  setContrast
+  setContrast,
+  paperSize,
+  setPaperSize
 }: FileControlsProps) => {
   return <>
     <div className={styles.row}>
@@ -155,9 +165,9 @@ const FileControls = ({
       <div className={styles.column}>
         <CloudHeader label="paper size" rotate="10deg"></CloudHeader>
         <div className={styles.row}>
-          <PaperIcon size="large"></PaperIcon>
-          <PaperIcon size="medium"></PaperIcon>
-          <PaperIcon size="small"></PaperIcon>
+          <PaperIcon size="large" onClick={() => setPaperSize("large")}></PaperIcon>
+          <PaperIcon size="medium" onClick={() => setPaperSize("medium")}></PaperIcon>
+          <PaperIcon size="small" onClick={() => setPaperSize("small")}></PaperIcon>
         </div>
       </div>
     </div>

@@ -7,27 +7,38 @@
   margin-top: -135px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: calc(65px / 2);
   width: 100%;
 }
 .component .paper {
-  width: 300px;
+  width: 280px;
+  /* width: 140px; */
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 140px;
 
-  box-sizing: border-box;
-  background-origin: white;
+  box-sizing: content-box;
+  background-color: white;
   border-radius: 2px;
   border-right: 2px solid #C1C36C;
   border-bottom: 2px solid #C1C36C;
   border-left: 2px solid #C1C36C;
   background: #FFF;
   box-shadow: 0px -5px 0px 0px #DDE4CD inset;
+  padding: 14px 10px;
+}
+
+.imageContainer {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  overflow-x: hidden;
 }
 
 .component .paper img {
+  box-sizing: border-box;
   width: 280px;
-  margin: 14px 10px;
 }

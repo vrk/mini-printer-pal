@@ -4,9 +4,7 @@ import burgerDithered from '../../assets/aaron.png--resized.png--dithered.png';
 import './App.css';
 
 import {
-  getImageDataForImage,
   getPrintData,
-  sendToPrinter,
 } from './print-helper';
 
 import { Button, Toggle, Printer, AdvancedControls } from "./components";
@@ -43,6 +41,7 @@ function Hello() {
   const [scaledImagePercentage, setScaledImagePercentage] = useState(100.0);
   const [brightness, setBrightness] = useState(100.0);
   const [contrast, setContrast] = useState(100.0);
+  const [paperSize, setPaperSize] = useState("large");
 
   const photo = new Photo(
     imageSrcData,
@@ -71,6 +70,7 @@ function Hello() {
     if (imageData) {
       const printData = await getPrintData(imageData);
       // await sendToPrinter(characteristic, printData);
+      // console.log(imageData.width, imageData.height)
       window.electron.ipcRenderer.sendMessage('print-file', printData);
     }
   };
@@ -95,10 +95,10 @@ function Hello() {
             setIsDitherOn(!isDitherOn)
           }} isOn={isDitherOn}></Toggle>
           <Button label="switch photo" onClick={onClickSwitchPhoto}></Button>
-          <Button onClick={onClickToggleControls} label={showAdvancedControls ? "<<" : ">>"}></Button>
+          <Button onClick={onClickToggleControls} label={showAdvancedControls ? ">>" : "<<"}></Button>
         </div>
         <div id="printer">
-          <Printer imgSrc={canvasDataSrc}></Printer>
+          <Printer size={paperSize} imgSrc={canvasDataSrc}></Printer>
         </div>
         <div id="printing">
           <Button onClick={onClick} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
@@ -109,6 +109,8 @@ function Hello() {
         setDitherKernel={setDitherKernel}
         scaledImagePercentage={scaledImagePercentage}
         setScaledImagePercentage={setScaledImagePercentage}
+        paperSize={paperSize}
+        setPaperSize={setPaperSize}
         brightness={brightness}
         setBrightness={setBrightness}
         contrast={contrast}

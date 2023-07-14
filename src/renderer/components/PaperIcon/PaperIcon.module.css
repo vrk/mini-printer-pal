@@ -1,7 +1,15 @@
 .component {
-  box-sizing: border-box;
+  cursor: pointer;
   background-color: white;
   border: 3px solid #C3846C;
+  padding: 0;
   height: 40px;
   box-shadow: -2px 2px 0px 0px #A6BF73;
+}
+
+.component:active {
+  box-shadow: none;
+  background-color: rgb(255, 255, 255);
+  top: 2px;
+  position: relativex;
 }

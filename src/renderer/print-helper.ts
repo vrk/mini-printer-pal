@@ -1,39 +1,5 @@
 const BYTES_PER_LINE = 70;
 
-export function getImageDataForImage(image: HTMLImageElement) {
-  const canvas = document.createElement('canvas');
-  // Canvas dimensions need to be a multiple of 40 for this printer
-  canvas.width = 560;
-
-
-  ///
-  ///
-  ///
-  ///
-  /// **REMEMBER***
-  // NEED TO CHANGE THIS
-  ///
-  ///
-  ///
-  canvas.height = 586;
-
-  const context = canvas.getContext("2d");
-  if (!context) {
-    return null;
-  }
-  context.drawImage(image, 0, 0, canvas.width, canvas.height);
-  return context.getImageData(0, 0, canvas.width, canvas.height);
-}
-
-function toRgba(imageData: ImageData, x: number, y: number) {
-  const { data, width } = imageData;
-  const r = data[((width * y) + x) * 4];
-  const g = data[((width * y) + x) * 4 + 1];
-  const b = data[((width * y) + x) * 4 + 2];
-  const a = data[((width * y) + x) * 4 + 3];
-  return { r, g, b, a}
-}
-
 export async function getPrintData(imageData: ImageData) {
   // const pic = await Jimp.read(printableImgPath)
   // let remaining = pic.bitmap.height;
@@ -110,9 +76,10 @@ export async function getPrintData(imageData: ImageData) {
             byte |= 1 << (7 - bit)
           }
         }
-        if (byte === 0x0a) {
-          byte = 0x14;
-        }
+        // Doesn't seem necessary?
+        // if (byte === 0x0a) {
+        //   byte = 0x14;
+        // }
         printData[index++] = byte;
       }
       // ******
