@@ -2,7 +2,6 @@ input[type=range].component {
   background-color: transparent;
   height: 39px;
   -webkit-appearance: none;
-  margin: 10px 0;
   width: 100%;
 }
 

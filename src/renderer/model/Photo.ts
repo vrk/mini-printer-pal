@@ -62,7 +62,6 @@ export class Photo {
     this.context = this.canvas.getContext('2d')!;
     this.kernel = kernel;
     this.scaledImagePercentage = scaledImagePercentage;
-    console.log(scaledImagePercentage)
   }
 
   async loadImage() {

@@ -84,7 +84,6 @@ function Hello() {
       <div id="main">
         <div id="controls">
           <Toggle onClick={() => { 
-            console.log("hi", isDitherOn);
             setIsDitherOn(!isDitherOn)
           }} isOn={isDitherOn}></Toggle>
           <Button label="switch photo" onClick={onClickSwitchPhoto}></Button>
@@ -100,6 +99,7 @@ function Hello() {
       </div>
       <AdvancedControls
         setDitherKernel={setDitherKernel}
+        scaledImagePercentage={scaledImagePercentage}
         setScaledImagePercentage={setScaledImagePercentage}
       ></AdvancedControls>
     </div>

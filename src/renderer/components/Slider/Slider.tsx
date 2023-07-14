@@ -6,6 +6,7 @@ export interface SliderProps extends React.ComponentProps<"input"> {
   min?: number;
   max?: number;
   initialValue?: number;
+  label?: string;
   ref?: React.RefObject<HTMLInputElement>;
 }
 
@@ -14,11 +15,15 @@ const Slider = ({
   min = 0,
   max = 100,
   initialValue = 100,
+  label: label,
   ref,
   ...inputProps
 }: SliderProps) => {
   const className = `${styles.component} ${styles[icon]}`;
-  return <input {...inputProps} type="range" ref={ref} className={className} min={min} max={max} defaultValue={initialValue} />
+  return <>
+    {label ? label : null}
+    <input {...inputProps} type="range" ref={ref} className={className} min={min} max={max} defaultValue={initialValue} />
+  </>
 }
 
 export default Slider;

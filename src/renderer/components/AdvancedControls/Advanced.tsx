@@ -24,6 +24,7 @@ import { STATUS_CODES } from "http";
 
 
 export interface FileProps {
+  scaledImagePercentage: number;
   setDitherKernel: React.Dispatch<React.SetStateAction<DitherKernel>>;
   setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -83,13 +84,13 @@ const dithers = [
 
 const File = ({
   setDitherKernel,
+  scaledImagePercentage,
   setScaledImagePercentage
 }: FileProps) => {
   const [showAllDithers, setShowAllDithers] = useState(false);
   const maxDithersToShow = showAllDithers ? dithers.length : 3;
   const dithersToShow = [...dithers]
   dithersToShow.splice(maxDithersToShow);
-  console.log(dithersToShow);
   const ditherButtons = dithersToShow.map((dither, index) => {
     return <DitherButton key={index} ditherStyle={dither.name} label={dither.name} onClick={() =>  setDitherKernel(dither.dither) }></DitherButton>
   })
@@ -97,35 +98,42 @@ const File = ({
   }
   return <div className={styles.component}>
     <div className={`${styles.column} ${styles.main}`}>
-      <CloudHeader label="dither style"></CloudHeader>
+      <CloudHeader rotate="3deg" label="dither style"></CloudHeader>
       <div className={`${styles.row} ${styles.dither} ${showAllDithers ? styles.ditherOpen : ""}`} id={styles.dither}>
         {ditherButtons}
         <Button className={styles.more} onClick={ () => setShowAllDithers(!showAllDithers) } label={showAllDithers ? "close" : "more"} topBottomPadding={0} leftRightPadding={10}></Button>
       </div>
     </div>
-    {showAllDithers ? null : <FileControls setScaledImagePercentage={setScaledImagePercentage} />}
+    {showAllDithers ? null : 
+      <FileControls
+        scaledImagePercentage={scaledImagePercentage}
+        setScaledImagePercentage={setScaledImagePercentage}
+      />
+    }
   </div>
 }
 
 interface FileControlsProps {
+  scaledImagePercentage: number;
   setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const FileControls = ({
+  scaledImagePercentage,
   setScaledImagePercentage
 }: FileControlsProps) => {
   return <>
     <div className={styles.row}>
       <div className={styles.column}>
-        <CloudHeader label="print size"></CloudHeader>
-        <Slider min={1} max={100} step={1} onChange={ 
+        <CloudHeader label="print size" rotate="-3deg"></CloudHeader>
+        <Slider label={`${scaledImagePercentage}%`} min={1} max={100} step={1} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
             setScaledImagePercentage(event.currentTarget.valueAsNumber)
           }
         } icon="size"></Slider>
       </div>
       <div className={styles.column}>
-        <CloudHeader label="paper size"></CloudHeader>
+        <CloudHeader label="paper size" rotate="10deg"></CloudHeader>
         <div className={styles.row}>
           <PaperIcon size="large"></PaperIcon>
           <PaperIcon size="medium"></PaperIcon>
@@ -135,11 +143,11 @@ const FileControls = ({
     </div>
     <div className={styles.row}>
       <div className={styles.column}>
-        <CloudHeader label="brightness"></CloudHeader>
+        <CloudHeader label="brightness" rotate="-3deg"></CloudHeader>
         <Slider icon="brightness"></Slider>
       </div>
       <div className={styles.column}>
-        <CloudHeader label="contrast"></CloudHeader>
+        <CloudHeader label="contrast" rotate="10deg"></CloudHeader>
         <Slider icon="contrast"></Slider>
       </div>
     </div>
