@@ -41,8 +41,16 @@ function Hello() {
   const [ditherKernel, setDitherKernel] = useState(FLOYD_STEINBERG);
   const [isDitherOn, setIsDitherOn] = useState(true);
   const [scaledImagePercentage, setScaledImagePercentage] = useState(100.0);
+  const [brightness, setBrightness] = useState(100.0);
+  const [contrast, setContrast] = useState(100.0);
 
-  const photo = new Photo(imageSrcData, isDitherOn ? ditherKernel : null, scaledImagePercentage);
+  const photo = new Photo(
+    imageSrcData,
+    isDitherOn ? ditherKernel : null,
+    scaledImagePercentage,
+    brightness,
+    contrast
+  );
   let imageData: null|ImageData = null;
   if (imageSrcData.length !== 0) {
     photo.loadImage().then(() => {
@@ -101,6 +109,10 @@ function Hello() {
         setDitherKernel={setDitherKernel}
         scaledImagePercentage={scaledImagePercentage}
         setScaledImagePercentage={setScaledImagePercentage}
+        brightness={brightness}
+        setBrightness={setBrightness}
+        contrast={contrast}
+        setContrast={setContrast}
       ></AdvancedControls>
     </div>
   );

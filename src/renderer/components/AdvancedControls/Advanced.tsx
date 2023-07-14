@@ -24,9 +24,13 @@ import { STATUS_CODES } from "http";
 
 
 export interface FileProps {
-  scaledImagePercentage: number;
   setDitherKernel: React.Dispatch<React.SetStateAction<DitherKernel>>;
+  scaledImagePercentage: number;
   setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
+  brightness: number;
+  setBrightness: React.Dispatch<React.SetStateAction<number>>;
+  contrast: number;
+  setContrast: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const dithers = [
@@ -85,7 +89,11 @@ const dithers = [
 const File = ({
   setDitherKernel,
   scaledImagePercentage,
-  setScaledImagePercentage
+  setScaledImagePercentage,
+  brightness,
+  setBrightness,
+  contrast,
+  setContrast
 }: FileProps) => {
   const [showAllDithers, setShowAllDithers] = useState(false);
   const maxDithersToShow = showAllDithers ? dithers.length : 3;
@@ -108,6 +116,10 @@ const File = ({
       <FileControls
         scaledImagePercentage={scaledImagePercentage}
         setScaledImagePercentage={setScaledImagePercentage}
+        brightness={brightness}
+        setBrightness={setBrightness}
+        contrast={contrast}
+        setContrast={setContrast}
       />
     }
   </div>
@@ -116,11 +128,19 @@ const File = ({
 interface FileControlsProps {
   scaledImagePercentage: number;
   setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
+  brightness: number;
+  setBrightness: React.Dispatch<React.SetStateAction<number>>;
+  contrast: number;
+  setContrast: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const FileControls = ({
   scaledImagePercentage,
-  setScaledImagePercentage
+  setScaledImagePercentage,
+  brightness,
+  setBrightness,
+  contrast,
+  setContrast
 }: FileControlsProps) => {
   return <>
     <div className={styles.row}>
@@ -144,11 +164,19 @@ const FileControls = ({
     <div className={styles.row}>
       <div className={styles.column}>
         <CloudHeader label="brightness" rotate="-3deg"></CloudHeader>
-        <Slider icon="brightness"></Slider>
+        <Slider label={`${brightness}%`} min={0} max={255} step={1} defaultValue={100} onChange={ 
+          (event: React.ChangeEvent<HTMLInputElement>) => {
+            setBrightness(event.currentTarget.valueAsNumber)
+          }
+         } icon="brightness"></Slider>
       </div>
       <div className={styles.column}>
         <CloudHeader label="contrast" rotate="10deg"></CloudHeader>
-        <Slider icon="contrast"></Slider>
+        <Slider label={`${contrast}%`} min={0} max={255} step={1} defaultValue={100} onChange={ 
+          (event: React.ChangeEvent<HTMLInputElement>) => {
+            setContrast(event.currentTarget.valueAsNumber)
+          }
+         } icon="contrast"></Slider>
       </div>
     </div>
   </>

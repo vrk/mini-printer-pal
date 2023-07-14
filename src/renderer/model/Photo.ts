@@ -53,15 +53,25 @@ export class Photo {
   private context: CanvasRenderingContext2D;
   private kernel?: DitherKernel|null;
   private scaledImagePercentage: number;
+  private brightness: number;
+  private contrast: number;
 
 
-  constructor(imageSrc: string, kernel: DitherKernel|null = null, scaledImagePercentage: number) {
+  constructor(
+    imageSrc: string,
+    kernel: DitherKernel|null = null,
+    scaledImagePercentage: number,
+    brightness: number,
+    contrast: number
+  ) {
     this.imageSrc = imageSrc;
     this.imageElement = new Image();
     this.canvas = document.createElement('canvas')
     this.context = this.canvas.getContext('2d')!;
     this.kernel = kernel;
     this.scaledImagePercentage = scaledImagePercentage;
+    this.brightness = brightness;
+    this.contrast = contrast;
   }
 
   async loadImage() {
@@ -74,6 +84,8 @@ export class Photo {
     const scaledImageWidth = IMAGE_WIDTH * scalePercentage;
     this.canvas.height = originalImageHeight * scaledImageWidth / originalImageWidth;
     const startDrawX = IMAGE_WIDTH - scaledImageWidth; 
+    this.context.filter = `brightness(${this.brightness}%) contrast(${this.contrast}%)`;
+    // ctx.filter = "contrast(1.4) sepia(1) drop-shadow(-9px 9px 3px #e81)";
     this.context.drawImage(this.imageElement, startDrawX, 0, scaledImageWidth, this.canvas.height);
     if (!this.kernel) {
       // this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
