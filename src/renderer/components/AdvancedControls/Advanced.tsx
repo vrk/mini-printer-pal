@@ -21,6 +21,7 @@ import {
 } from "@thi.ng/pixel-dither";
 import type { IObjectOf } from "@thi.ng/api";
 import { STATUS_CODES } from "http";
+import Preset from "../Preset/Preset";
 
 
 export interface FileProps {
@@ -103,8 +104,13 @@ const File = ({
   }
   return <div className={styles.component}>
     <div className={styles.draggable}></div>
-    <div className={`${styles.column} ${styles.main}`}>
+    <div className={styles.heading}>
       <CloudHeader rotate="3deg" label="presets"></CloudHeader>
+    </div>
+    <div className={`${styles.row} ${styles.main}`}>
+      <Preset label="photo" type="photo" rotateDeg={3} marginTopPx={0} />
+      <Preset label="light bg sticker" type="light" rotateDeg={-4.1} marginTopPx={-75} />
+      <Preset label="dark bg sticker" type="dark" rotateDeg={12} marginTopPx={-25}/>
     </div>
     <FileControls
       setDitherKernel={setDitherKernel}
@@ -152,7 +158,7 @@ const FileControls = ({
   })
   return <div className={styles.container}>
     <div className={styles.heading}>
-      <CloudHeader label="tweak it" rotate="-3deg"></CloudHeader>
+      <CloudHeader label="fiddlin'" rotate="-3deg"></CloudHeader>
     </div>
 
     {showAllDithers ? null : <div className={styles.controls}>

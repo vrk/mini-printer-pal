@@ -9,7 +9,7 @@
   position: absolute;
   top: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   gap: 20px;
@@ -36,7 +36,11 @@
   width: 90%;
   font-size: 18px;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 60px;
+}
+
+.main {
+  width: 90%;
 }
 
 
@@ -82,7 +86,7 @@
   align-content: center;
 
   /** comment out for simpler view **/
-  margin-top: -70px;
+  margin-top: -50px;
 }
 
 .paperSize {
