@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import File from './Advanced';
 
 const meta = {
-  title: 'File',
+  title: 'Advanced',
   component: File,
 } satisfies Meta<typeof File>;
 

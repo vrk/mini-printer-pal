@@ -1,0 +1,61 @@
+.component {
+  width: 112.106px;
+  height: 112.106px;
+  flex-shrink: 0;
+  border: 6px solid white;
+  /* background: url(), lightgray 50% / cover no-repeat; */
+  box-shadow: 4px 4px 0px 0px #A6BF73;
+  position: relative;
+}
+
+.label {
+  font-size: 18px;
+  font-family: 'Gaegu';
+  position: absolute;
+}
+
+.light {
+  background-image: url(./muzik.jpg);
+  background-size: cover;
+}
+
+.light div {
+  position: absolute;
+  left: -10%;
+  height: 18px;
+  bottom: -28px;
+  text-align: center;
+  box-sizing: border-box;
+  width: 120%;
+}
+
+.dark {
+  background-image: url(./ryan-space.png);
+  background-size: cover;
+}
+
+.dark div {
+  position: absolute;
+  left: -10%;
+  height: 18px;
+  top: -28px;
+  text-align: center;
+  box-sizing: border-box;
+  width: 120%;
+}
+
+.photo {
+  background-image: url(./polar.png);
+  background-size: cover;
+}
+
+.photo div {
+  position: absolute;
+  left: calc(-112px/2 - 18px);
+  rotate: -90deg;
+  height: 18px;
+  width: 112px;
+  top: calc(112px/2 - 18px/2);
+  text-align: center;
+  box-sizing: border-box;
+}

@@ -32,7 +32,13 @@
 
 .dither {
   gap: 18px;
+  margin-top: 10px;
+  width: 90%;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 50px;
 }
+
 
 .container {
   width: 100%;
@@ -51,6 +57,7 @@
 }
 
 .ditherOpen {
+  margin-top: 10px;
   flex-wrap: wrap;
   justify-content: center;
   max-width: 80%;;
@@ -71,8 +78,11 @@
   grid-template-columns: 170px 170px;
   grid-column-gap: 80px;
   grid-row-gap: 10px;
-  align-items: center;
+  align-items: end;
   align-content: center;
+
+  /** comment out for simpler view **/
+  margin-top: -70px;
 }
 
 .paperSize {
