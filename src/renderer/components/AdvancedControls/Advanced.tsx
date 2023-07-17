@@ -25,6 +25,7 @@ import Preset from "../Preset/Preset";
 
 
 export interface FileProps {
+  ditherKernel: DitherKernel;
   setDitherKernel: React.Dispatch<React.SetStateAction<DitherKernel>>;
   scaledImagePercentage: number;
   setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
@@ -38,11 +39,6 @@ export interface FileProps {
 
 const dithers = [
 	{ 
-    dither: FLOYD_STEINBERG,
-    name: "floyd",
-    label: "",
-  },
-	{ 
     dither: JARVIS_JUDICE_NINKE,
     name: "jarvis",
     label: "",
@@ -50,6 +46,16 @@ const dithers = [
 	{ 
     dither: ATKINSON,
     name: "atkinson",
+    label: "",
+  },
+	{ 
+    dither: THRESHOLD,
+    name: "threshold",
+    label: "",
+  },
+	{ 
+    dither: FLOYD_STEINBERG,
+    name: "floyd",
     label: "",
   },
 	{ 
@@ -82,14 +88,10 @@ const dithers = [
     name: "stucki",
     label: "",
   },
-	{ 
-    dither: THRESHOLD,
-    name: "threshold",
-    label: "",
-  },
 ];
 
 const File = ({
+  ditherKernel,
   setDitherKernel,
   scaledImagePercentage,
   setScaledImagePercentage,
@@ -100,6 +102,23 @@ const File = ({
   paperSize,
   setPaperSize
 }: FileProps) => {
+  const photoPreset = () => {
+    setBrightness(100.0)
+    setContrast(100.0)
+    setDitherKernel(JARVIS_JUDICE_NINKE)
+  }
+
+  const lightPreset = () => {
+    setBrightness(86.0)
+    setContrast(255.0)
+    setDitherKernel(ATKINSON)
+  }
+  const darkPreset = () => {
+    setBrightness(215)
+    setContrast(100.0)
+    setDitherKernel(THRESHOLD)
+  }
+
   const style = {
   }
   return <div className={styles.component}>
@@ -108,11 +127,12 @@ const File = ({
       <CloudHeader rotate="3deg" label="presets"></CloudHeader>
     </div>
     <div className={`${styles.row} ${styles.main}`}>
-      <Preset label="photo" type="photo" rotateDeg={3} marginTopPx={0} />
-      <Preset label="light bg sticker" type="light" rotateDeg={-4.1} marginTopPx={-75} />
-      <Preset label="dark bg sticker" type="dark" rotateDeg={12} marginTopPx={-25}/>
+      <Preset label="photo" type="photo" rotateDeg={3} marginTopPx={0} onClick={photoPreset}/>
+      <Preset label="light bg sticker" type="light" rotateDeg={-4.1} marginTopPx={-75} onClick={lightPreset} />
+      <Preset label="dark bg sticker" type="dark" rotateDeg={12} marginTopPx={-25} onClick={darkPreset}/>
     </div>
     <FileControls
+    ditherKernel={ditherKernel}
       setDitherKernel={setDitherKernel}
       scaledImagePercentage={scaledImagePercentage}
       setScaledImagePercentage={setScaledImagePercentage}
@@ -127,6 +147,7 @@ const File = ({
 }
 
 interface FileControlsProps {
+  ditherKernel: DitherKernel;
   setDitherKernel: React.Dispatch<React.SetStateAction<DitherKernel>>;
   scaledImagePercentage: number;
   setScaledImagePercentage: React.Dispatch<React.SetStateAction<number>>;
@@ -139,6 +160,7 @@ interface FileControlsProps {
 }
 
 const FileControls = ({
+  ditherKernel,
   setDitherKernel,
   scaledImagePercentage,
   setScaledImagePercentage,
@@ -154,7 +176,8 @@ const FileControls = ({
   const dithersToShow = [...dithers]
   dithersToShow.splice(maxDithersToShow);
   const ditherButtons = dithersToShow.map((dither, index) => {
-    return <DitherButton key={index} ditherStyle={dither.name} label={dither.name} onClick={() =>  setDitherKernel(dither.dither) }></DitherButton>
+    const highlighted = dither.dither === ditherKernel;
+    return <DitherButton key={index} ditherStyle={dither.name} highlighted={highlighted} label={dither.name} onClick={() =>  setDitherKernel(dither.dither) }></DitherButton>
   })
   return <div className={styles.container}>
     <div className={styles.heading}>

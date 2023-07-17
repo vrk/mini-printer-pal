@@ -22,7 +22,7 @@ const Slider = ({
   const className = `${styles.component} ${styles[icon]}`;
   return <div>
     <div className={styles.label}>{label ? label : null}</div>
-    <input {...inputProps} type="range" ref={ref} className={className} min={min} max={max} defaultValue={defaultValue} />
+    <input {...inputProps} type="range" ref={ref} className={className} min={min} max={max} value={defaultValue} />
   </div>
 }
 

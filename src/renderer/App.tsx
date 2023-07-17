@@ -36,7 +36,7 @@ function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   const [imageSrcData, setImageSrcData] = useState(pengy);
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
-  const [ditherKernel, setDitherKernel] = useState(FLOYD_STEINBERG);
+  const [ditherKernel, setDitherKernel] = useState(JARVIS_JUDICE_NINKE);
   const [isDitherOn, setIsDitherOn] = useState(true);
   const [scaledImagePercentage, setScaledImagePercentage] = useState(100.0);
   const [brightness, setBrightness] = useState(100.0);
@@ -107,6 +107,7 @@ function Hello() {
         </div>
       </div>
       <AdvancedControls
+        ditherKernel={ditherKernel}
         setDitherKernel={setDitherKernel}
         scaledImagePercentage={scaledImagePercentage}
         setScaledImagePercentage={setScaledImagePercentage}

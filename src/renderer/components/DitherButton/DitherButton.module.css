@@ -12,10 +12,17 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 2px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
   border-top: 2px solid #FFF;
   border-right: 2px solid #FFF;
   border-left: 2px solid #FFF;
-  box-sizing: border-box;
+  box-sizing: content-box;
+}
+
+.component.highlighted .icon {
+  border-width: 4px;
+  border-color: #C3846C;
 }
 
 .component .icon.floyd {
