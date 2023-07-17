@@ -41,3 +41,8 @@ input[type=range].component.brightness::-webkit-slider-thumb {
 input[type=range].component.contrast::-webkit-slider-thumb {
   background-image: url(./contrast.png);
 }
+
+.label {
+  text-align: center;
+  font-size: 18px;
+}

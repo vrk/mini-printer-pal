@@ -111,7 +111,7 @@ const File = ({
   return <div className={styles.component}>
     <div className={styles.draggable}></div>
     <div className={`${styles.column} ${styles.main}`}>
-      <CloudHeader rotate="3deg" label="dither style"></CloudHeader>
+      <CloudHeader rotate="3deg" label="presets"></CloudHeader>
       <div className={`${styles.row} ${styles.dither} ${showAllDithers ? styles.ditherOpen : ""}`} id={styles.dither}>
         {ditherButtons}
         <Button className={styles.more} onClick={ () => setShowAllDithers(!showAllDithers) } label={showAllDithers ? "close" : "more"} topBottomPadding={0} leftRightPadding={10}></Button>
@@ -153,44 +153,41 @@ const FileControls = ({
   paperSize,
   setPaperSize
 }: FileControlsProps) => {
-  return <>
-    <div className={styles.row}>
-      <div className={styles.column}>
-        <CloudHeader label="print size" rotate="-3deg"></CloudHeader>
-        <Slider label={`${scaledImagePercentage}%`} min={1} max={100} step={1} onChange={ 
-          (event: React.ChangeEvent<HTMLInputElement>) => {
-            setScaledImagePercentage(event.currentTarget.valueAsNumber)
-          }
-        } icon="size"></Slider>
-      </div>
-      <div className={styles.column}>
-        <CloudHeader label="paper size" rotate="10deg"></CloudHeader>
+  return <div className={styles.container}>
+    <div className={styles.heading}>
+      <CloudHeader label="tweak it" rotate="-3deg"></CloudHeader>
+    </div>
+
+    <div className={styles.controls}>
+      <Slider label={`size: ${scaledImagePercentage}%`} min={1} max={100} step={1} onChange={ 
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+          setScaledImagePercentage(event.currentTarget.valueAsNumber)
+        }
+      } icon="size"></Slider>
+
+      <Slider label={`brightness: ${brightness}%`} min={0} max={255} step={1} defaultValue={brightness} onChange={ 
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+          setBrightness(event.currentTarget.valueAsNumber)
+        }
+        } icon="brightness"></Slider>
+
+      <div>
+        <div className={styles.paperSize}> paper size:</div>
         <div className={styles.row}>
           <PaperIcon size="large" onClick={() => setPaperSize("large")}></PaperIcon>
           <PaperIcon size="medium" onClick={() => setPaperSize("medium")}></PaperIcon>
           <PaperIcon size="small" onClick={() => setPaperSize("small")}></PaperIcon>
         </div>
       </div>
+
+      <Slider label={`contrast: ${contrast}%`} min={0} max={255} step={1} defaultValue={contrast} onChange={ 
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+          setContrast(event.currentTarget.valueAsNumber)
+        }
+        } icon="contrast"></Slider>
+
     </div>
-    <div className={styles.row}>
-      <div className={styles.column}>
-        <CloudHeader label="brightness" rotate="-3deg"></CloudHeader>
-        <Slider label={`${brightness}%`} min={0} max={255} step={1} defaultValue={100} onChange={ 
-          (event: React.ChangeEvent<HTMLInputElement>) => {
-            setBrightness(event.currentTarget.valueAsNumber)
-          }
-         } icon="brightness"></Slider>
-      </div>
-      <div className={styles.column}>
-        <CloudHeader label="contrast" rotate="10deg"></CloudHeader>
-        <Slider label={`${contrast}%`} min={0} max={255} step={1} defaultValue={100} onChange={ 
-          (event: React.ChangeEvent<HTMLInputElement>) => {
-            setContrast(event.currentTarget.valueAsNumber)
-          }
-         } icon="contrast"></Slider>
-      </div>
-    </div>
-  </>
+  </div>
 }
 
 export default File;
