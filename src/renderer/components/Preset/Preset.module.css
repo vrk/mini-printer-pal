@@ -6,6 +6,15 @@
   /* background: url(), lightgray 50% / cover no-repeat; */
   box-shadow: 4px 4px 0px 0px #A6BF73;
   position: relative;
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
+.component:active {
+  box-shadow: none;
+  background-color: rgb(255, 255, 255);
+  top: 2px;
+  position: relativex;
 }
 
 .label {
@@ -17,6 +26,10 @@
 .light {
   background-image: url(./muzik.jpg);
   background-size: cover;
+}
+
+.light:hover {
+  background-image: url(./muzik-dither.png);
 }
 
 .light div {
@@ -32,6 +45,10 @@
 .dark {
   background-image: url(./ryan-space.png);
   background-size: cover;
+}
+
+.dark:hover {
+  background-image: url(./ryan-space-dither.png);
 }
 
 .dark div {
@@ -58,4 +75,8 @@
   top: calc(112px/2 - 18px/2);
   text-align: center;
   box-sizing: border-box;
+}
+
+.photo:hover {
+  background-image: url(./polar-dither.png);
 }
