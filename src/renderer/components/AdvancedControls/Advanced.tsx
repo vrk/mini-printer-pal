@@ -109,6 +109,7 @@ const File = ({
   const style = {
   }
   return <div className={styles.component}>
+    <div className={styles.draggable}></div>
     <div className={`${styles.column} ${styles.main}`}>
       <CloudHeader rotate="3deg" label="dither style"></CloudHeader>
       <div className={`${styles.row} ${styles.dither} ${showAllDithers ? styles.ditherOpen : ""}`} id={styles.dither}>

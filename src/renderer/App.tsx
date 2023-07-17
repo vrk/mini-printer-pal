@@ -90,6 +90,7 @@ function Hello() {
   return (
     <div id="container">
       <div id="main">
+        <div id="draggable-header-region"></div>
         <div id="controls">
           <Toggle onClick={() => { 
             setIsDitherOn(!isDitherOn)

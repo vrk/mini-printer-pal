@@ -24,9 +24,9 @@ contextMenu({
 
 
 
-const WINDOW_WIDTH_SMALL = 477;
-const WINDOW_WIDTH_LARGE = 1024;
-const WINDOW_HEIGHT = 700;
+const WINDOW_WIDTH_SMALL = 600;
+const WINDOW_WIDTH_LARGE = 1100;
+const WINDOW_HEIGHT = 800;
 
 class AppUpdater {
   constructor() {

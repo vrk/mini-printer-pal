@@ -40,6 +40,7 @@ import {
   
 const BYTES_PER_LINE = 70;
 const IMAGE_WIDTH = BYTES_PER_LINE * 8;
+const MAX_HEIGHT_FOR_M02S_IN_PX = 925;
 
 export class Photo {
   // imageElement: HTMLImageElement;
@@ -82,17 +83,26 @@ export class Photo {
     const scalePercentage = Math.max(this.scaledImagePercentage / 100.0, 0.01); 
 
     const scaledImageWidth = IMAGE_WIDTH * scalePercentage;
-    this.canvas.height = originalImageHeight * scaledImageWidth / originalImageWidth;
+    const scaledHeight = originalImageHeight * scaledImageWidth / originalImageWidth;
+    this.canvas.height = Math.min(scaledHeight, MAX_HEIGHT_FOR_M02S_IN_PX);
     const startDrawX = IMAGE_WIDTH - scaledImageWidth; 
     this.context.filter = `brightness(${this.brightness}%) contrast(${this.contrast}%)`;
-    // ctx.filter = "contrast(1.4) sepia(1) drop-shadow(-9px 9px 3px #e81)";
-    this.context.drawImage(this.imageElement, startDrawX, 0, scaledImageWidth, this.canvas.height);
+    this.context.drawImage(this.imageElement, startDrawX, 0, scaledImageWidth, scaledHeight);
     if (!this.kernel) {
-      // this.context.drawImage(this.imageElement, 0, 0, this.canvas.width, this.canvas.height);
       return;
     }
     const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
     ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
+
+
+
+    // TODO: brightness filter
+    // const lighter = await this.loadImageToNewImageElement(this.canvas.toDataURL());
+    // this.context.filter = `brightness(150%)`;
+    // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // this.context.drawImage(lighter, startDrawX, 0, scaledImageWidth, this.canvas.height);
+    // const intBuffer2 = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
+    // ditherWith(this.kernel, intBuffer2.copy()).blitCanvas(this.canvas);
   }
 
   private async loadImageToImageElement(imageSrc: string) {
@@ -104,6 +114,16 @@ export class Photo {
     });
 
   }
+  private async loadImageToNewImageElement(imageSrc: string) {
+    return new Promise<HTMLImageElement>((resolve) => {
+      const img = new Image();
+      img.src = imageSrc;
+      img.onload = () => {
+        resolve(img);
+      };
+    });
+  }
+
 
   getCanvasDataUrl() {
     return this.canvas.toDataURL();
