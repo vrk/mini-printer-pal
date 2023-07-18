@@ -45,6 +45,14 @@
   width: 120%;
 }
 
+.light:has(+ .dark:hover) {
+  rotate: -1deg;
+}
+
+.photo:hover + .light {
+  rotate: -1deg;
+}
+
 .dark {
   background-image: url(./ryan-space.png);
   background-size: cover;
@@ -52,10 +60,17 @@
   margin-top: -25px;
 }
 
-.light:hover ~ .dark {
-  rotate: 14deg;
+.dark:hover {
+  rotate: 8deg;
 }
 
+.light:hover ~ .dark {
+  rotate: 8deg;
+}
+
+.photo:hover ~ .dark {
+  rotate: 8deg;
+}
 
 .dark:hover {
   background-image: url(./ryan-space-dither.png);
@@ -91,8 +106,13 @@
 
 .photo:hover {
   background-image: url(./polar-dither.png);
+  rotate: -4deg;
 }
 
 .photo:has(+ .light:hover) {
-  rotate: -1deg;
+  rotate: -4deg;
+}
+
+.photo:has(~ .dark:hover) {
+  rotate: -4deg;
 }
