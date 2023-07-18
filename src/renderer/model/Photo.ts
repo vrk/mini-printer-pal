@@ -17,24 +17,11 @@
  */
 
 import {
-  canvas2d,
   GRAY_ALPHA8,
-  imagePromise,
-  IntBuffer,
   intBufferFromCanvas,
 } from "@thi.ng/pixel";
 import {
-  ATKINSON,
-  BURKES,
-  DIFFUSION_2D,
-  DIFFUSION_COLUMN,
-  DIFFUSION_ROW,
   ditherWith,
-  FLOYD_STEINBERG,
-  JARVIS_JUDICE_NINKE,
-  SIERRA2,
-  STUCKI,
-  THRESHOLD,
   type DitherKernel,
 } from "@thi.ng/pixel-dither";    
   
@@ -56,6 +43,7 @@ export class Photo {
   private scaledImagePercentage: number;
   private brightness: number;
   private contrast: number;
+  private lightness: number;
 
 
   constructor(
@@ -63,7 +51,8 @@ export class Photo {
     kernel: DitherKernel|null = null,
     scaledImagePercentage: number,
     brightness: number,
-    contrast: number
+    contrast: number,
+    lightness: number
   ) {
     this.imageSrc = imageSrc;
     this.imageElement = new Image();
@@ -73,6 +62,7 @@ export class Photo {
     this.scaledImagePercentage = scaledImagePercentage;
     this.brightness = brightness;
     this.contrast = contrast;
+    this.lightness = lightness;
   }
 
   async loadImage() {
@@ -94,16 +84,27 @@ export class Photo {
     const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
     ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
 
-
-
     // TODO: brightness filter
-    // const lighter = await this.loadImageToNewImageElement(this.canvas.toDataURL());
-    // this.context.filter = `brightness(150%)`;
-    // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // this.context.drawImage(lighter, startDrawX, 0, scaledImageWidth, this.canvas.height);
-    // const intBuffer2 = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
-    // ditherWith(this.kernel, intBuffer2.copy()).blitCanvas(this.canvas);
+    const pixelData = this.getImageData();
+    this.lightnenPixels(pixelData);
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.putImageData(pixelData, 0, 0);
+    const intBuffer2 = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
+    ditherWith(this.kernel, intBuffer2.copy()).blitCanvas(this.canvas);
   }
+
+  private lightnenPixels(pixelData: ImageData) {
+    let i = 0;
+    let dat = pixelData.data;
+    const lightnessMultiplier = 255.0 * (100.0 - this.lightness) / 100.0;
+    while (i < dat.length) {
+        dat[i] = dat[i++] + lightnessMultiplier;
+        dat[i] = dat[i++] + lightnessMultiplier;
+        dat[i] = dat[i++] + lightnessMultiplier;
+        i++; // skip alpha
+    }
+    return pixelData;
+}
 
   private async loadImageToImageElement(imageSrc: string) {
     return new Promise<void>((resolve) => {

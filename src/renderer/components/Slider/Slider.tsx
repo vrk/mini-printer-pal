@@ -2,7 +2,7 @@ import React from "react";
 import styles from './Slider.module.css'; // Import css modules stylesheet as styles
 
 export interface SliderProps extends React.ComponentProps<"input"> {
-  icon?: "size"|"brightness"|"contrast";
+  icon?: "size"|"brightness"|"contrast"|"lightness";
   min?: number;
   max?: number;
   defaultValue?: number;

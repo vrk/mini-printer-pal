@@ -22,6 +22,7 @@ function Hello() {
   const [scaledImagePercentage, setScaledImagePercentage] = useState(100.0);
   const [brightness, setBrightness] = useState(100.0);
   const [contrast, setContrast] = useState(100.0);
+  const [lightness, setLightness] = useState(100.0);
   const [paperSize, setPaperSize] = useState("L");
 
   const photo = new Photo(
@@ -29,7 +30,8 @@ function Hello() {
     isDitherOn ? ditherKernel : null,
     scaledImagePercentage,
     brightness,
-    contrast
+    contrast,
+    lightness
   );
   let imageData: null|ImageData = null;
   if (imageSrcData.length !== 0) {
@@ -88,6 +90,8 @@ function Hello() {
         setBrightness={setBrightness}
         contrast={contrast}
         setContrast={setContrast}
+        lightness={lightness}
+        setLightness={setLightness}
       ></AdvancedControls>
     </div>
   );

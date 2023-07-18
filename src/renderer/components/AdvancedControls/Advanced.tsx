@@ -11,7 +11,6 @@ import {
 	DIFFUSION_2D,
 	DIFFUSION_COLUMN,
 	DIFFUSION_ROW,
-	ditherWith,
 	FLOYD_STEINBERG,
 	JARVIS_JUDICE_NINKE,
 	SIERRA2,
@@ -19,8 +18,6 @@ import {
 	THRESHOLD,
 	type DitherKernel,
 } from "@thi.ng/pixel-dither";
-import type { IObjectOf } from "@thi.ng/api";
-import { STATUS_CODES } from "http";
 import Preset from "../Preset/Preset";
 
 
@@ -33,6 +30,8 @@ export interface FileProps {
   setBrightness: React.Dispatch<React.SetStateAction<number>>;
   contrast: number;
   setContrast: React.Dispatch<React.SetStateAction<number>>;
+  lightness: number;
+  setLightness: React.Dispatch<React.SetStateAction<number>>;
   paperSize: string;
   setPaperSize: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -99,6 +98,8 @@ const File = ({
   setBrightness,
   contrast,
   setContrast,
+  lightness,
+  setLightness,
   paperSize,
   setPaperSize
 }: FileProps) => {
@@ -106,17 +107,20 @@ const File = ({
     setBrightness(100.0)
     setContrast(100.0)
     setDitherKernel(JARVIS_JUDICE_NINKE)
+    setLightness(100.0)
   }
 
   const lightPreset = () => {
     setBrightness(86.0)
     setContrast(255.0)
     setDitherKernel(ATKINSON)
+    setLightness(100.0)
   }
   const darkPreset = () => {
     setBrightness(215)
     setContrast(100.0)
     setDitherKernel(THRESHOLD)
+    setLightness(100.0)
   }
 
   const style = {
@@ -140,6 +144,8 @@ const File = ({
       setBrightness={setBrightness}
       contrast={contrast}
       setContrast={setContrast}
+      lightness={lightness}
+      setLightness={setLightness}
       paperSize={paperSize}
       setPaperSize={setPaperSize}
     />
@@ -155,6 +161,8 @@ interface FileControlsProps {
   setBrightness: React.Dispatch<React.SetStateAction<number>>;
   contrast: number;
   setContrast: React.Dispatch<React.SetStateAction<number>>;
+  lightness: number;
+  setLightness: React.Dispatch<React.SetStateAction<number>>;
   paperSize: string;
   setPaperSize: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -168,6 +176,8 @@ const FileControls = ({
   setBrightness,
   contrast,
   setContrast,
+  lightness,
+  setLightness,
   paperSize,
   setPaperSize
 }: FileControlsProps) => {
@@ -216,11 +226,11 @@ const FileControls = ({
           } icon="contrast"></Slider>
 
         {/** comment out for simpler view */}
-        <Slider label={`contrast: ${contrast}%`} min={0} max={255} step={1} defaultValue={contrast} onChange={ 
+        <Slider label={`opacity: ${lightness}%`} min={0} max={100} step={1} defaultValue={lightness} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
-            setContrast(event.currentTarget.valueAsNumber)
+            setLightness(event.currentTarget.valueAsNumber)
           }
-          } icon="contrast"></Slider>
+          } icon="lightness"></Slider>
       </div>
     </div>}
     <div className={`${styles.row} ${styles.dither} ${showAllDithers ? styles.ditherOpen : ""}`} id={styles.dither}>
