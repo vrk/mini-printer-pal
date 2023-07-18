@@ -77,6 +77,10 @@ ipcMain.on('resize-window', async (event, arg) => {
   }
 });
 
+ipcMain.on("quit", async (event, arg) => {
+  app.quit();
+});
+
 ipcMain.on("choose-file", async (event, arg) => {
   const result = await dialog.showOpenDialog({
     properties: ["openFile"],
@@ -84,6 +88,9 @@ ipcMain.on("choose-file", async (event, arg) => {
   });
 
   const { canceled, filePaths } = result;
+  if (canceled) {
+    return;
+  }
   const fileData = await fs.promises.readFile(filePaths[0])
   const base64 = fileData.toString('base64');
   event.reply("file-chosen", base64);

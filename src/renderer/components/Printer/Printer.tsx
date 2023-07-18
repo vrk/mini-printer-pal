@@ -3,14 +3,15 @@ import styles from './Printer.module.css'; // Import css modules stylesheet as s
 import printerImg from "./printer.svg";
 
 export interface PrinterProps {
-  size: "L"|"M"|"S";
-  imgSrc: string;
+  size?: "L"|"M"|"S";
+  imgSrc?: string;
 }
 
 const PrinterProps = ({
+  children,
   imgSrc,
   size
-}: PrinterProps) => {
+}: React.PropsWithChildren<PrinterProps>) => {
   let width = 280;
   switch (size) {
     case "M":
@@ -29,9 +30,11 @@ const PrinterProps = ({
     <img src={printerImg}  width="365" height="174" />
     <div className={styles.paperContainer}>
       <div className={styles.paper} style={paperStyle}>
+        {children ? children :
         <div className={styles.imageContainer}>
           <img src={imgSrc} />
         </div>
+        }
       </div>
     </div>
   </div>

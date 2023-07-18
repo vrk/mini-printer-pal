@@ -11,11 +11,10 @@ import { Photo } from './model/Photo';
 import {
   JARVIS_JUDICE_NINKE,
 } from "@thi.ng/pixel-dither";    
-import pengy from "../../assets/pengyface.png"; 
 
 function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
-  const [imageSrcData, setImageSrcData] = useState(pengy);
+  const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
   const [ditherKernel, setDitherKernel] = useState(JARVIS_JUDICE_NINKE);
   const [isDitherOn, setIsDitherOn] = useState(true);
@@ -60,8 +59,10 @@ function Hello() {
       setImageSrcData(src);
     });
   }
-  return (
-    <div id="container">
+  const onClickQuit = () => {
+    window.electron.ipcRenderer.sendMessage('quit');
+  }
+  const editImageScreen = <>
       <div id="main">
         <div id="draggable-header-region"></div>
         <div id="controls">
@@ -93,6 +94,26 @@ function Hello() {
         lightness={lightness}
         setLightness={setLightness}
       ></AdvancedControls>
+    </>;
+  const mainMenuScreen = <>
+    <div id="main-menu">
+      <div id="draggable-header-region"></div>
+      <h1>welcome to<br/>Mini Printer Pal :)</h1>
+      <Printer>
+        <div id="menu-items">
+          <Button color="pink" label="print an image" fontSize={24} width={245} topBottomPadding={12} onClick={onClickSwitchPhoto}></Button>
+          <Button color="pink" label="quit" fontSize={24} width={245} topBottomPadding={12} onClick={onClickQuit}></Button>
+        </div>
+      </Printer>
+      <p>
+        made with ♡ by vrk
+      </p>
+    </div>
+  </>
+  
+  return (
+    <div id="container">
+      {imageSrcData.length === 0 ? mainMenuScreen : editImageScreen}
     </div>
   );
 }
