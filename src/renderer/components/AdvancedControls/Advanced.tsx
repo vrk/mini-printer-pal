@@ -53,13 +53,23 @@ const dithers = [
     label: "",
   },
 	{ 
-    dither: FLOYD_STEINBERG,
-    name: "floyd",
+    dither: SIERRA2,
+    name: "sierra2",
+    label: "",
+  },
+	{ 
+    dither: STUCKI,
+    name: "stucki",
     label: "",
   },
 	{ 
     dither: BURKES,
     name: "burkes",
+    label: "",
+  },
+	{ 
+    dither: FLOYD_STEINBERG,
+    name: "floyd",
     label: "",
   },
 	{ 
@@ -75,16 +85,6 @@ const dithers = [
 	{ 
     dither: DIFFUSION_ROW,
     name: "diffrow",
-    label: "",
-  },
-	{ 
-    dither: SIERRA2,
-    name: "sierra2",
-    label: "",
-  },
-	{ 
-    dither: STUCKI,
-    name: "stucki",
     label: "",
   },
 ];
@@ -104,7 +104,7 @@ const File = ({
   setPaperSize
 }: FileProps) => {
   const photoPreset = () => {
-    setBrightness(100.0)
+    setBrightness(130.0)
     setContrast(100.0)
     setDitherKernel(JARVIS_JUDICE_NINKE)
     setLightness(100.0)
@@ -213,13 +213,13 @@ const FileControls = ({
       </div>
 
       <div>
-        <Slider label={`brightness: ${brightness}%`} min={0} max={255} step={1} defaultValue={brightness} onChange={ 
+        <Slider label={`brightness: ${brightness}%`} min={0} max={500} step={1} defaultValue={brightness} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
             setBrightness(event.currentTarget.valueAsNumber)
           }
           } icon="brightness"></Slider>
 
-        <Slider label={`contrast: ${contrast}%`} min={0} max={255} step={1} defaultValue={contrast} onChange={ 
+        <Slider label={`contrast: ${contrast}%`} min={0} max={500} step={1} defaultValue={contrast} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
             setContrast(event.currentTarget.valueAsNumber)
           }
