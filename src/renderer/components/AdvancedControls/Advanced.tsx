@@ -186,7 +186,7 @@ const FileControls = ({
 
     {showAllDithers ? null : <div className={styles.controls}>
       <div>
-        <Slider label={`size: ${scaledImagePercentage}%`} min={1} max={100} step={1} onChange={ 
+        <Slider label={`size: ${scaledImagePercentage}%`} min={1} max={100} step={1} defaultValue={scaledImagePercentage} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
             setScaledImagePercentage(event.currentTarget.valueAsNumber)
           }
