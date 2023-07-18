@@ -28,6 +28,9 @@ const WINDOW_WIDTH_SMALL = 600;
 const WINDOW_WIDTH_LARGE = 1100;
 const WINDOW_HEIGHT = 800;
 
+const WINDOW_WIDTH_MAIN_MENU = 800;
+const WINDOW_HEIGHT_MAIN_MENU = 600;
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -65,14 +68,10 @@ async function getWritableCharacteristic(peripheral: noble.Peripheral) {
   return characteristic;
 }
 
-ipcMain.on('resize-window', async (event, arg) => {
+ipcMain.on('resize-window', async (event, type: string) => {
   if (mainWindow) {
-    const [ width ] = mainWindow.getSize()
-    // TODO: fix hack
-    if (width < WINDOW_WIDTH_LARGE) {
+    if (type === "editImage") {
       mainWindow.setSize(WINDOW_WIDTH_LARGE, WINDOW_HEIGHT);
-    } else {
-      mainWindow.setSize(WINDOW_WIDTH_SMALL, WINDOW_HEIGHT);
     }
   }
 });
@@ -122,8 +121,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: WINDOW_WIDTH_LARGE,
-    height: WINDOW_HEIGHT,
+    width: WINDOW_WIDTH_MAIN_MENU,
+    height: WINDOW_HEIGHT_MAIN_MENU,
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     webPreferences: {

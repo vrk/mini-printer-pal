@@ -13,6 +13,7 @@ import {
 } from "@thi.ng/pixel-dither";    
 
 function Hello() {
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
@@ -56,6 +57,10 @@ function Hello() {
 
     window.electron.ipcRenderer.on('file-chosen', (base64) => {
       const src = `data:image/jpg;base64,${base64}`
+      if (isFirstLoad) {
+        window.electron.ipcRenderer.sendMessage('resize-window', "editImage");
+        setIsFirstLoad(false);
+      }
       setImageSrcData(src);
     });
   }
