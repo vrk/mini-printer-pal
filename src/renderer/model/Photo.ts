@@ -84,6 +84,10 @@ export class Photo {
     const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
     ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
 
+    if (this.lightness > 99) {
+      return;
+    }
+
     // TODO: brightness filter
     const pixelData = this.getImageData();
     this.lightnenPixels(pixelData);

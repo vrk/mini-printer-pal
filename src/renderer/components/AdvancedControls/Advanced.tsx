@@ -213,13 +213,13 @@ const FileControls = ({
       </div>
 
       <div>
-        <Slider label={`brightness: ${brightness}%`} min={0} max={500} step={1} defaultValue={brightness} onChange={ 
+        <Slider label={`brightness: ${brightness}%`} min={0} max={300} step={1} defaultValue={brightness} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
             setBrightness(event.currentTarget.valueAsNumber)
           }
           } icon="brightness"></Slider>
 
-        <Slider label={`contrast: ${contrast}%`} min={0} max={500} step={1} defaultValue={contrast} onChange={ 
+        <Slider label={`contrast: ${contrast}%`} min={0} max={300} step={1} defaultValue={contrast} onChange={ 
           (event: React.ChangeEvent<HTMLInputElement>) => {
             setContrast(event.currentTarget.valueAsNumber)
           }
