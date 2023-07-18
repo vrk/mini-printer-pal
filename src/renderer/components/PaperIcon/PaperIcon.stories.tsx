@@ -12,18 +12,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Big: Story = {
   args: {
-    size: "large",
+    size: "L",
   },
 };
 
 export const Medium: Story = {
   args: {
-    size: "medium",
+    size: "M",
   },
 };
 
 export const Small: Story = {
   args: {
-    size: "small"
+    size: "S"
   },
 };

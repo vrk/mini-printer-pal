@@ -2,7 +2,7 @@ import React from "react";
 import styles from './PaperIcon.module.css'; // Import css modules stylesheet as styles
 
 export interface PaperIconProps {
-  size: "large"|"medium"|"small";
+  size: "L"|"M"|"S";
   onClick: () => void;
 }
 
@@ -12,13 +12,13 @@ const PaperIcon = ({
 }: PaperIconProps) => {
   let width = 40;
   switch (size) {
-    case "medium":
+    case "M":
       width = width * 0.51;
       break;
-    case "small":
+    case "S":
       width = width * 0.3;
       break;
-    case "large":
+    case "L":
       break;
   }
   const style = {

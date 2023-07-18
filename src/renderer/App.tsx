@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import burgerDithered from '../../assets/aaron.png--resized.png--dithered.png';
 import './App.css';
 
 import {
@@ -10,27 +9,9 @@ import {
 import { Button, Toggle, Printer, AdvancedControls } from "./components";
 import { Photo } from './model/Photo';
 import {
-  ATKINSON,
-  BURKES,
-  DIFFUSION_2D,
-  DIFFUSION_COLUMN,
-  DIFFUSION_ROW,
-  ditherWith,
-  FLOYD_STEINBERG,
   JARVIS_JUDICE_NINKE,
-  SIERRA2,
-  STUCKI,
-  THRESHOLD,
-  type DitherKernel,
 } from "@thi.ng/pixel-dither";    
 import pengy from "../../assets/pengyface.png"; 
-
-// let imageData: ImageData | null = null;
-// const image = new Image();
-// image.onload = () => {
-//   imageData = getImageDataForImage(image);
-// };
-// image.src = burgerDithered;
 
 function Hello() {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
@@ -41,7 +22,7 @@ function Hello() {
   const [scaledImagePercentage, setScaledImagePercentage] = useState(100.0);
   const [brightness, setBrightness] = useState(100.0);
   const [contrast, setContrast] = useState(100.0);
-  const [paperSize, setPaperSize] = useState("large");
+  const [paperSize, setPaperSize] = useState("L");
 
   const photo = new Photo(
     imageSrcData,
@@ -59,18 +40,8 @@ function Hello() {
   }
 
   const onClick = async () => {
-    // const device = await (navigator as any).bluetooth.requestDevice({
-    //   acceptAllDevices: true,
-    //   optionalServices: [0xff00],
-    // });
-    // const server = await device.gatt.connect();
-    // const service = await server.getPrimaryService(0xff00);
-    // const characteristic = await service.getCharacteristic(0xff02);
-
     if (imageData) {
       const printData = await getPrintData(imageData);
-      // await sendToPrinter(characteristic, printData);
-      // console.log(imageData.width, imageData.height)
       window.electron.ipcRenderer.sendMessage('print-file', printData);
     }
   };

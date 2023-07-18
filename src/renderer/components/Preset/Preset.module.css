@@ -26,10 +26,13 @@
 .light {
   background-image: url(./muzik.jpg);
   background-size: cover;
+  rotate: -4.1deg;
+  margin-top: -75px;;
 }
 
 .light:hover {
   background-image: url(./muzik-dither.png);
+  rotate: 2deg;
 }
 
 .light div {
@@ -45,7 +48,14 @@
 .dark {
   background-image: url(./ryan-space.png);
   background-size: cover;
+  rotate: 12deg;
+  margin-top: -25px;
 }
+
+.light:hover ~ .dark {
+  rotate: 14deg;
+}
+
 
 .dark:hover {
   background-image: url(./ryan-space-dither.png);
@@ -64,6 +74,8 @@
 .photo {
   background-image: url(./polar.png);
   background-size: cover;
+  rotate: 3deg;
+  margin-top: 0;
 }
 
 .photo div {
@@ -79,4 +91,8 @@
 
 .photo:hover {
   background-image: url(./polar-dither.png);
+}
+
+.photo:has(+ .light:hover) {
+  rotate: -1deg;
 }

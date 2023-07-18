@@ -127,9 +127,9 @@ const File = ({
       <CloudHeader rotate="3deg" label="presets"></CloudHeader>
     </div>
     <div className={`${styles.row} ${styles.main}`}>
-      <Preset label="photo" type="photo" rotateDeg={3} marginTopPx={0} onClick={photoPreset}/>
-      <Preset label="light bg sticker" type="light" rotateDeg={-4.1} marginTopPx={-75} onClick={lightPreset} />
-      <Preset label="dark bg sticker" type="dark" rotateDeg={12} marginTopPx={-25} onClick={darkPreset}/>
+      <Preset label="photo" type="photo" onClick={photoPreset}/>
+      <Preset label="light bg sticker" type="light" onClick={lightPreset} />
+      <Preset label="dark bg sticker" type="dark"  onClick={darkPreset}/>
     </div>
     <FileControls
     ditherKernel={ditherKernel}
@@ -193,11 +193,11 @@ const FileControls = ({
         } icon="size"></Slider>
 
         <div>
-          <div className={styles.paperSize}> paper size:</div>
+          <div className={styles.paperSize}> paper size: {paperSize}</div>
           <div className={styles.row}>
-            <PaperIcon size="large" onClick={() => setPaperSize("large")}></PaperIcon>
-            <PaperIcon size="medium" onClick={() => setPaperSize("medium")}></PaperIcon>
-            <PaperIcon size="small" onClick={() => setPaperSize("small")}></PaperIcon>
+            <PaperIcon size="L" onClick={() => setPaperSize("L")}></PaperIcon>
+            <PaperIcon size="M" onClick={() => setPaperSize("M")}></PaperIcon>
+            <PaperIcon size="S" onClick={() => setPaperSize("S")}></PaperIcon>
           </div>
         </div>
       </div>

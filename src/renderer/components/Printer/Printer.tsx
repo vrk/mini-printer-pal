@@ -3,7 +3,7 @@ import styles from './Printer.module.css'; // Import css modules stylesheet as s
 import printerImg from "./printer.svg";
 
 export interface PrinterProps {
-  size: "large"|"medium"|"small";
+  size: "L"|"M"|"S";
   imgSrc: string;
 }
 
@@ -13,13 +13,13 @@ const PrinterProps = ({
 }: PrinterProps) => {
   let width = 280;
   switch (size) {
-    case "medium":
+    case "M":
       width = width * 0.51;
       break;
-    case "small":
+    case "S":
       width = width * 0.3;
       break;
-    case "large":
+    case "L":
       break;
   }
   const paperStyle = {
