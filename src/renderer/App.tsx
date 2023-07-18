@@ -67,6 +67,38 @@ function Hello() {
   const onClickQuit = () => {
     window.electron.ipcRenderer.sendMessage('quit');
   }
+
+  document.addEventListener('paste', async (e) => {
+    e.preventDefault();
+    const clipboardItems = await navigator.clipboard.read() ;
+  
+    for (const clipboardItem of clipboardItems) {
+      // For files from `navigator.clipboard.read()`.
+      console.log(clipboardItem.types)
+      const [ imageType ] = clipboardItem.types.filter(type => type.startsWith('image/'))
+      if (!imageType) {
+        return;
+      }
+      const blob = await clipboardItem.getType(imageType);
+      
+      const reader = new FileReader();
+      const getBlob = async () => {
+        return new Promise((resolve) => {
+          reader.onload = function(event) {
+            resolve(event.target?.result); // data url!
+          };
+          reader.readAsDataURL(blob);
+        })
+      }
+      const dataUrl = await getBlob();
+      if (isFirstLoad) {
+        window.electron.ipcRenderer.sendMessage('resize-window', "editImage");
+        setIsFirstLoad(false);
+      }
+      setImageSrcData(dataUrl);
+    }
+  });
+  
   const editImageScreen = <>
       <div id="main">
         <div id="draggable-header-region"></div>
@@ -74,7 +106,7 @@ function Hello() {
           <Toggle onClick={() => { 
             setIsDitherOn(!isDitherOn)
           }} isOn={isDitherOn}></Toggle>
-          <Button label="switch photo" onClick={onClickSwitchPhoto}></Button>
+          <Button label="change image" onClick={onClickSwitchPhoto}></Button>
           <Button onClick={onClickToggleControls} label={showAdvancedControls ? ">>" : "<<"}></Button>
         </div>
         <div id="printer">

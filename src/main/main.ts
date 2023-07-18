@@ -149,22 +149,6 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  mainWindow.webContents.on(
-    'select-bluetooth-device',
-    (event, deviceList, callback) => {
-      event.preventDefault();
-      const result = deviceList.find((device) => {
-        return device.deviceName === 'M02S';
-      });
-      if (result) {
-        callback(result.deviceId);
-      } else {
-        // The device wasn't found so we need to either wait longer (eg until the
-        // device is turned on) or until the user cancels the request
-      }
-    }
-  );
-
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
@@ -176,7 +160,7 @@ const createWindow = async () => {
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+  // new AppUpdater();
 };
 
 /**
@@ -230,7 +214,6 @@ async function scanDevices(scanDurationInMs=5000) {
     if (localName === undefined || localName.trim().length === 0) {
       return;
     }
-    console.log(localName);
     discoveredDevices[localName] = peripheral;
   });
   noble.startScanningAsync();
