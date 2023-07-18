@@ -45,13 +45,13 @@
   width: 120%;
 }
 
-.light:has(+ .dark:hover) {
+/* .light:has(+ .dark:hover) {
   rotate: -1deg;
 }
 
 .photo:hover + .light {
   rotate: -1deg;
-}
+} */
 
 .dark {
   background-image: url(./ryan-space.png);
@@ -60,20 +60,17 @@
   margin-top: -25px;
 }
 
-.dark:hover {
-  rotate: 8deg;
-}
-
-.light:hover ~ .dark {
+/* .light:hover ~ .dark {
   rotate: 8deg;
 }
 
 .photo:hover ~ .dark {
   rotate: 8deg;
-}
+} */
 
 .dark:hover {
   background-image: url(./ryan-space-dither.png);
+  rotate: 8deg;
 }
 
 .dark div {
@@ -109,10 +106,10 @@
   rotate: -4deg;
 }
 
-.photo:has(+ .light:hover) {
+/* .photo:has(+ .light:hover) {
   rotate: -4deg;
 }
 
 .photo:has(~ .dark:hover) {
   rotate: -4deg;
-}
+} */
