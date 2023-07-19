@@ -13,6 +13,7 @@ export async function getPrintData(imageData: ImageData) {
   // const pic = await Jimp.read(printableImgPath)
   // let remaining = pic.bitmap.height;
   let remaining = imageData.height;
+  // let remaining = 300;
   let printData = [];
   let index = 0;
 
@@ -42,8 +43,8 @@ export async function getPrintData(imageData: ImageData) {
 
   while (remaining > 0) {
     let lines = remaining
-    if (lines > 256) {
-      lines = 256;
+    if (lines > 255) {
+      lines = 255;
     }
 
     // ********
@@ -63,7 +64,7 @@ export async function getPrintData(imageData: ImageData) {
     printData[index++] = 0
 
     // Number of lines to print in this block.
-    printData[index++] = lines - 1;
+    printData[index++] = lines;
     printData[index++] = 0
     // ********
 
@@ -96,6 +97,36 @@ export async function getPrintData(imageData: ImageData) {
       line++;
     }
   }
+
+  //
+  // MARK: Here's a hack to try to get around that weird printer slowness issue, not sure
+  // if effective
+  // 
+  let blanks = 50;
+  // One last marker line 
+  printData[index++] = 29
+  printData[index++] = 118
+  printData[index++] = 48
+
+  // Mode: 0=normal, 1=double width, 2=double height, 3=quadruple
+  printData[index++] = 0
+
+  // Bytes per line
+  printData[index++] = BYTES_PER_LINE
+  printData[index++] = 0
+
+  // Number of lines to print in this block.
+  printData[index++] = blanks;
+  printData[index++] = 0;
+
+  for (let b = 0; b < blanks; b++) {
+    for (let x = 0; x < BYTES_PER_LINE; x++) {
+      printData[index++] = 0;
+    }
+  }
+  //
+  // MARK: DONE
+  // 
 
 
   // ******
