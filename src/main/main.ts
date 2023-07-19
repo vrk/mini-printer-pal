@@ -117,6 +117,10 @@ if (isDebug) {
 }
 
 const createWindow = async () => {
+  if (mainWindow) {
+    return;
+
+  } 
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
     : path.join(__dirname, '../../assets');
@@ -171,38 +175,38 @@ const createWindow = async () => {
   // new AppUpdater();
 };
 
-const createPrintDialog = async () => {
-  if (!mainWindow) {
-    return;
-  }
+// const createPrintDialog = async () => {
+//   if (!mainWindow) {
+//     return;
+//   }
 
-  scanDevices();
+//   scanDevices();
 
-  printDialog = new BrowserWindow({
-    parent: mainWindow,
-    modal: true,
-    show: false,
-    backgroundColor: 'white', 
-    width: 457,
-    height: 324,
-    titleBarStyle: 'hidden',
-    webPreferences: {
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
-    },
-  });
+//   printDialog = new BrowserWindow({
+//     parent: mainWindow,
+//     modal: true,
+//     show: false,
+//     backgroundColor: 'white', 
+//     width: 457,
+//     height: 400,
+//     titleBarStyle: 'hidden',
+//     webPreferences: {
+//       preload: app.isPackaged
+//         ? path.join(__dirname, 'preload.js')
+//         : path.join(__dirname, '../../.erb/dll/preload.js'),
+//     },
+//   });
 
-  printDialog.loadURL(resolveHtmlPath('select-printer.html'));
+//   printDialog.loadURL(resolveHtmlPath('select-printer.html'));
 
-  printDialog.on('ready-to-show', () => {
-    printDialog?.show();
-  });
+//   printDialog.on('ready-to-show', () => {
+//     printDialog?.show();
+//   });
 
-  printDialog.on('closed', () => {
-    printDialog = null;
-  });
-};
+//   printDialog.on('closed', () => {
+//     printDialog = null;
+//   });
+// };
 
 /**
  * Add event listeners...
