@@ -18,6 +18,8 @@ import fs from 'fs';
 import contextMenu from 'electron-context-menu';
 import noble from "@abandonware/noble";
 
+
+
 contextMenu({
 	showSaveImageAs: true
 });
@@ -29,7 +31,7 @@ const WINDOW_WIDTH_LARGE = 1100;
 const WINDOW_HEIGHT = 800;
 
 const WINDOW_WIDTH_MAIN_MENU = 800;
-const WINDOW_HEIGHT_MAIN_MENU = 600;
+const WINDOW_HEIGHT_MAIN_MENU = 550;
 
 class AppUpdater {
   constructor() {
@@ -71,7 +73,11 @@ async function getWritableCharacteristic(peripheral: noble.Peripheral) {
 ipcMain.on('resize-window', async (event, type: string) => {
   if (mainWindow) {
     if (type === "editImage") {
+      mainWindow?.center();
       mainWindow.setSize(WINDOW_WIDTH_LARGE, WINDOW_HEIGHT);
+    } else if (type === "mainMenu") {
+      mainWindow.setSize(WINDOW_WIDTH_MAIN_MENU, WINDOW_HEIGHT_MAIN_MENU);
+      mainWindow.center();
     }
   }
 });
@@ -121,11 +127,13 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
+    backgroundColor: '#d1deb6', 
     width: WINDOW_WIDTH_MAIN_MENU,
     height: WINDOW_HEIGHT_MAIN_MENU,
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     webPreferences: {
+      nodeIntegration: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),

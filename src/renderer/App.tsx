@@ -14,7 +14,6 @@ import {
 
 function Hello() {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
   const [ditherKernel, setDitherKernel] = useState(JARVIS_JUDICE_NINKE);
@@ -49,8 +48,9 @@ function Hello() {
   };
 
   const onClickToggleControls = () => {
-    setShowAdvancedControls(!showAdvancedControls);
-    window.electron.ipcRenderer.sendMessage('resize-window');
+    setImageSrcData("")
+    setIsFirstLoad(true);
+    window.electron.ipcRenderer.sendMessage('resize-window', "mainMenu");
   }
   const onClickSwitchPhoto = () => {
     window.electron.ipcRenderer.sendMessage('choose-file');
@@ -103,11 +103,11 @@ function Hello() {
       <div id="main">
         <div id="draggable-header-region"></div>
         <div id="controls">
+          <Button onClick={onClickToggleControls} label="<<"></Button>
+          <Button label="change image" onClick={onClickSwitchPhoto}></Button>
           <Toggle onClick={() => { 
             setIsDitherOn(!isDitherOn)
           }} isOn={isDitherOn}></Toggle>
-          <Button label="change image" onClick={onClickSwitchPhoto}></Button>
-          <Button onClick={onClickToggleControls} label={showAdvancedControls ? ">>" : "<<"}></Button>
         </div>
         <div id="printer">
           <Printer size={paperSize} imgSrc={canvasDataSrc}></Printer>
@@ -138,7 +138,7 @@ function Hello() {
       <h1>welcome to<br/>Mini Printer Pal :)</h1>
       <Printer>
         <div id="menu-items">
-          <Button color="pink" label="print an image" fontSize={24} width={245} topBottomPadding={12} onClick={onClickSwitchPhoto}></Button>
+          <Button color="pink" label="open image in editor" fontSize={24} width={245} topBottomPadding={12} onClick={onClickSwitchPhoto}></Button>
           <Button color="pink" label="quit" fontSize={24} width={245} topBottomPadding={12} onClick={onClickQuit}></Button>
         </div>
       </Printer>

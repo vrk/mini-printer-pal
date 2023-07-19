@@ -57,7 +57,7 @@ export class Photo {
     this.imageSrc = imageSrc;
     this.imageElement = new Image();
     this.canvas = document.createElement('canvas')
-    this.context = this.canvas.getContext('2d')!;
+    this.context = this.canvas.getContext('2d', { willReadFrequently: true })!;
     this.kernel = kernel;
     this.scaledImagePercentage = scaledImagePercentage;
     this.brightness = brightness;

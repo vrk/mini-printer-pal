@@ -29,6 +29,7 @@ body * {
 }
 
 body {
+  background-color: #d1deb6;
   color: #6C8A2C;
   height: 100vh;
   font-family: 'Gaegu';
