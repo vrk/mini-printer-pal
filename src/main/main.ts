@@ -42,6 +42,7 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let printDialog: BrowserWindow | null = null;
 
 let characteristic: noble.Characteristic | null = null;
 
@@ -51,12 +52,13 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('print-file', async (event, data: number[]) => {
-  if (!characteristic) {
-    characteristic = await getWritableCharacteristic(discoveredDevices['M02S']);
-  }
-  characteristic.write(Buffer.from(data), false, (error: string) => {
-    console.log('done', error);
-  });
+  // if (!characteristic) {
+  //   characteristic = await getWritableCharacteristic(discoveredDevices['M02S']);
+  // }
+  // characteristic.write(Buffer.from(data), false, (error: string) => {
+  //   console.log('done', error);
+  // });
+  await createPrintDialog();
 })
   
 async function getWritableCharacteristic(peripheral: noble.Peripheral) {
@@ -123,8 +125,6 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  scanDevices();
-
   mainWindow = new BrowserWindow({
     show: false,
     backgroundColor: '#d1deb6', 
@@ -169,6 +169,39 @@ const createWindow = async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   // new AppUpdater();
+};
+
+const createPrintDialog = async () => {
+  if (!mainWindow) {
+    return;
+  }
+
+  scanDevices();
+
+  printDialog = new BrowserWindow({
+    parent: mainWindow,
+    modal: true,
+    show: false,
+    backgroundColor: 'white', 
+    width: 457,
+    height: 324,
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  printDialog.loadURL(resolveHtmlPath('select-printer.html'));
+
+  printDialog.on('ready-to-show', () => {
+    printDialog?.show();
+  });
+
+  printDialog.on('closed', () => {
+    printDialog = null;
+  });
 };
 
 /**

@@ -1,0 +1,117 @@
+ @font-face {
+  font-family: 'Gaegu';
+  src: url(./Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  border-radius: 10px;
+  background: #FFF;
+  color: #000;
+  font-family: 'Gaegu';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+form {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border: 10px solid #FEE6F2;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+
+button {
+  text-align: center;
+  font-family: 'Gaegu';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #F15AA3;
+  border: 1px solid #D4126F;
+  background: #ffe6f2;
+  box-shadow: 0px -3px 0px 0px #F2A6CC inset, -2px 2px 0px 0px white inset;
+  width: 85px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+button:active {
+  box-shadow: 0px -3px 0px 0px white inset, -2px 2px 0px 0px #F2A6CC inset;
+}
+
+label {
+  display: block;
+}
+
+select {
+  font-family: "Gaegu", monospace;
+  font-size: 24px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  -webkit-font-smoothing: antialiased;
+  border: 2px solid #FFC0E0;
+  min-width: 100px;
+}
+
+select option {
+  font-family: "Gaegu", monospace;
+  font-size: 24px;
+  background-color: white;
+}
+
+input[type="radio"] {
+  cursor: pointer;
+
+  /* The native appearance is hidden */
+  appearance: none;
+
+  /* For a circular appearance we need a border-radius. */
+  border-radius: 50%;
+
+  /* The background will be the radio dot's color. */
+  background: white;
+
+  /* The border will be the spacing between the dot and the outer circle */
+  /* border: 3px solid #FFF; */
+
+  /* And by creating a box-shadow with no offset and no blur, we have an outer circle */
+  box-shadow: 0 0 0 3px #FFC0E0;
+
+  height: 10px;
+  width: 10px;
+}
+
+input[type="radio"]:checked {
+  background: #FFC0E0;
+}
+
+input[type="radio"] {
+  margin-right: 20px;
+}
+
+.multi {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selections {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buttons {
+  display: flex;
+  gap: 50px;
+}

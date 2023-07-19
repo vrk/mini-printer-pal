@@ -1,5 +1,5 @@
 /**
- * - Photo
+    - Photo
     - Constructor()
     - initialize(HTMLImageElement)
         - create originalImageData
@@ -30,11 +30,6 @@ const IMAGE_WIDTH = BYTES_PER_LINE * 8;
 const MAX_HEIGHT_FOR_M02S_IN_PX = 925;
 
 export class Photo {
-  // imageElement: HTMLImageElement;
-  // canvas: HTMLCanvasElement;
-  // originalImageData: number[];
-  // scaledImageData: Uint8Array;
-  // ditheredImageData: Uint8Array;
   readonly imageSrc: string;
   private canvas: HTMLCanvasElement;
   private imageElement: HTMLImageElement;
@@ -44,7 +39,6 @@ export class Photo {
   private brightness: number;
   private contrast: number;
   private lightness: number;
-
 
   constructor(
     imageSrc: string,
@@ -117,8 +111,8 @@ export class Photo {
         resolve();
       };
     });
-
   }
+
   private async loadImageToNewImageElement(imageSrc: string) {
     return new Promise<HTMLImageElement>((resolve) => {
       const img = new Image();
@@ -128,7 +122,6 @@ export class Photo {
       };
     });
   }
-
 
   getCanvasDataUrl() {
     return this.canvas.toDataURL();

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self'; script-src 'self'">
+    <title>printer menu</title>
+    <link rel="stylesheet" href="select-printer.css">
+  </head>
+  <body>
+    <script type="module" src="select-printer.js" defer></script>
+
+    <form>
+      <div class="selections">
+        <label>
+          <input type="radio" name="destination" value="topng" checked/>
+          <span>save to png</span>
+        </label>
+        <label>
+          <input type="radio" name="destination" value="toprinter"/>
+          <div class="multi">
+            <span>print to mini printer</span>
+            <select id="select-printer" disabled>
+              <option>hi</option>
+            </select>
+          </div>
+        </label>
+      </div>
+
+      <div id="error"></div>
+      <div class="buttons">
+        <button>cancel</button>
+        <button>print</button>
+      </div>
+    </form>
+  </body>
+</html>

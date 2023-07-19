@@ -6,6 +6,8 @@ import webpack from 'webpack';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import webpackPaths from './webpack.paths';
 import { dependencies as externals } from '../../release/app/package.json';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+
 
 const configuration: webpack.Configuration = {
   externals: [...Object.keys(externals || {})],
@@ -53,6 +55,11 @@ const configuration: webpack.Configuration = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
+    new CopyWebpackPlugin({
+        patterns: [
+            { from: 'static' },
+        ]
+    })
   ],
 };
 
