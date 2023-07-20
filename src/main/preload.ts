@@ -2,7 +2,15 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example'|'resize-window'|'choose-file'|'file-chosen'|'print-file'|'quit'|'open-print-dialog';
+export type Channels = 'ipc-example'|
+  'resize-window'|
+  'choose-file'|
+  'file-chosen'|
+  'print-file'|
+  'quit'|
+  'open-print-dialog'|
+  'print-to-bluetooth'|
+  'close-print-dialog';
 
 const electronHandler = {
   ipcRenderer: {

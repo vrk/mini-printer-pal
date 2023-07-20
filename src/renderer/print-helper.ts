@@ -9,11 +9,12 @@ function toRgba(imageData: ImageData, x: number, y: number) {
   return { r, g, b, a}
 }
 
+
 export async function getPrintData(imageData: ImageData) {
   // const pic = await Jimp.read(printableImgPath)
   // let remaining = pic.bitmap.height;
-  let remaining = imageData.height;
-  // let remaining = 300;
+  let remaining = imageData.height + 128;
+  // let remaining = 2;
   let printData = [];
   let index = 0;
 
@@ -73,24 +74,31 @@ export async function getPrintData(imageData: ImageData) {
     while (lines > 0) {
       // ******
       // PRINT LINE
-      for (let x = 0; x < BYTES_PER_LINE; x++) {
-        let byte = 0;
+      if (line < imageData.height) {
+        for (let x = 0; x < BYTES_PER_LINE; x++) {
+          let byte = 0;
 
-        for (let bit = 0; bit < 8; bit++) {
-          imageData.data
-          // const rgba = Jimp.intToRGBA(pic.getPixelColor(x * 8 + bit, line));
-          const xVal = x * 8 + bit;
-          const yVal = line;
-          const rgba = toRgba(imageData, xVal, yVal);
-          if (rgba.r === 0 && rgba.a !== 0) {
-            byte |= 1 << (7 - bit)
+          for (let bit = 0; bit < 8; bit++) {
+            imageData.data
+            // const rgba = Jimp.intToRGBA(pic.getPixelColor(x * 8 + bit, line));
+            const xVal = x * 8 + bit;
+            const yVal = line;
+            const rgba = toRgba(imageData, xVal, yVal);
+            if (rgba.r === 0 && rgba.a !== 0) {
+              byte |= 1 << (7 - bit)
+            }
           }
+          // Maybe not needed?
+          // if (byte === 0x0a) {
+          //   byte = 0x14;
+          // }
+          printData[index++] = byte;
         }
-        // Maybe not needed?
-        // if (byte === 0x0a) {
-        //   byte = 0x14;
-        // }
-        printData[index++] = byte;
+      } else {
+        console.log(line);
+        for (let x = 0; x < BYTES_PER_LINE; x++) {
+          printData[index++] = 0;
+        }
       }
       // ******
       lines--;
@@ -99,34 +107,6 @@ export async function getPrintData(imageData: ImageData) {
   }
 
   //
-  // MARK: Here's a hack to try to get around that weird printer slowness issue, not sure
-  // if effective
-  // 
-  let blanks = 50;
-  // One last marker line 
-  printData[index++] = 29
-  printData[index++] = 118
-  printData[index++] = 48
-
-  // Mode: 0=normal, 1=double width, 2=double height, 3=quadruple
-  printData[index++] = 0
-
-  // Bytes per line
-  printData[index++] = BYTES_PER_LINE
-  printData[index++] = 0
-
-  // Number of lines to print in this block.
-  printData[index++] = blanks;
-  printData[index++] = 0;
-
-  for (let b = 0; b < blanks; b++) {
-    for (let x = 0; x < BYTES_PER_LINE; x++) {
-      printData[index++] = 0;
-    }
-  }
-  //
-  // MARK: DONE
-  // 
 
 
   // ******
@@ -138,9 +118,9 @@ export async function getPrintData(imageData: ImageData) {
   printData[index++] = 100;
   printData[index++] = 2;
 
-  printData[index++] = 27;
-  printData[index++] = 100;
-  printData[index++] = 2;
+  // printData[index++] = 27;
+  // printData[index++] = 100;
+  // printData[index++] = 2;
 
   // just footer codes now
 

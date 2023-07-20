@@ -60,7 +60,7 @@ select {
   border-radius: 5px;
   -webkit-font-smoothing: antialiased;
   border: 2px solid #FFC0E0;
-  min-width: 100px;
+  width: 250px;
 }
 
 select option {
@@ -106,6 +106,7 @@ input[type="radio"] {
 }
 
 .selections {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;

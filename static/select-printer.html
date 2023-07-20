@@ -13,15 +13,15 @@
     <form>
       <div class="selections">
         <label>
-          <input type="radio" name="destination" value="topng" checked/>
+          <input type="radio" name="destination" value="topng"/>
           <span>save to png</span>
         </label>
         <label>
           <input type="radio" name="destination" value="toprinter"/>
           <div class="multi">
             <span>print to mini printer</span>
-            <select id="select-printer" disabled>
-              <option>hi</option>
+            <select id="select-printer" name="printer-name" disabled>
+              <option id="option-placeholder" selected disabled>searching...</option>
             </select>
           </div>
         </label>
@@ -29,8 +29,8 @@
 
       <div id="error"></div>
       <div class="buttons">
-        <button>cancel</button>
-        <button>print</button>
+        <button id="cancel-btn">cancel</button>
+        <button id="print-btn">print</button>
       </div>
     </form>
   </body>

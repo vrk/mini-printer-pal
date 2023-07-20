@@ -44,21 +44,115 @@ class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 let printDialog: BrowserWindow | null = null;
 
-let characteristic: noble.Characteristic | null = null;
+type Devices = {
+  [key: string]: noble.Peripheral;
+};
+  
+let discoveredDevices: Devices = {};
+
+type Characteristics= {
+  [key: string]: noble.Characteristic;
+};
+let discoveredCharacteristics: Characteristics = {};
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+
+let printfileData: number[] | null = null;
 ipcMain.on('print-file', async (event, data: number[]) => {
-  // if (!characteristic) {
-  //   characteristic = await getWritableCharacteristic(discoveredDevices['M02S']);
-  // }
-  // characteristic.write(Buffer.from(data), false, (error: string) => {
-  //   console.log('done', error);
+  printfileData = data;
+  createPrintDialog();
+})
+
+ipcMain.on('print-to-png', async () => {
+  console.log('TODO: print to png');
+});
+
+function getInitPrintData() {
+  let printData = [];
+  let index = 0;
+
+  // ********
+  // FROM https://github.com/vivier/phomemo-tools/tree/master#31-header
+  // PRINTING HEADER
+
+  // Initialize printer
+  printData[index++] = 27;
+  printData[index++] = 64;
+
+  // Select justification
+  printData[index++] = 27;
+  printData[index++] = 97;
+
+  // Justify (0=left, 1=center, 2=right)
+  printData[index++] = 0;
+
+  // End of header
+  printData[index++] = 31;
+  printData[index++] = 17;
+  printData[index++] = 2;
+  printData[index++] = 4;
+  // ********
+
+
+  printData[index++] = 29
+  printData[index++] = 118
+  printData[index++] = 48
+
+  // Mode: 0=normal, 1=double width, 2=double height, 3=quadruple
+  printData[index++] = 0
+
+  // Bytes per line
+  printData[index++] = 70
+  printData[index++] = 0
+
+  // Number of lines to print in this block.
+  printData[index++] = 10;
+  printData[index++] = 0
+
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 70; x++) {
+      printData[index++] = 0;
+    }
+  }
+  
+  printData[index++] = 27;
+  printData[index++] = 100;
+  printData[index++] = 2;
+
+  // FOOTER
+  printData[index++] = 31;
+  printData[index++] = 17;
+  printData[index++] = 8;
+  // \x1f\x11\x0e
+  printData[index++] = 31;
+  printData[index++] = 17;
+  printData[index++] = 14;
+
+  // x1f\x11\x07
+  printData[index++] = 31;
+  printData[index++] = 17;
+  printData[index++] = 7;
+  return printData;
+}
+
+ipcMain.on('print-to-bluetooth', async (event, deviceName) => {
+  console.log(deviceName);
+  if (!printfileData || !deviceName) {
+    return;
+  }
+  if (!discoveredCharacteristics[deviceName]) {
+    discoveredCharacteristics[deviceName] = await getWritableCharacteristic(discoveredDevices[deviceName]);
+  }
+  const copiedData = [...printfileData];
+  printfileData = null;
+  // discoveredCharacteristics[deviceName].write(Buffer.from(getInitPrintData()), false, (error: string) => {
+    discoveredCharacteristics[deviceName].write(Buffer.from(copiedData), false, (error: string) => {
+    });
   // });
-  await createPrintDialog();
 })
   
 async function getWritableCharacteristic(peripheral: noble.Peripheral) {
@@ -83,6 +177,15 @@ ipcMain.on('resize-window', async (event, type: string) => {
     }
   }
 });
+
+ipcMain.on("close-print-dialog", async (event, arg) => {
+  if (!printDialog) {
+    return;
+  }
+  printDialog.close();
+  printDialog = null;
+});
+
 
 ipcMain.on("quit", async (event, arg) => {
   app.quit();
@@ -175,38 +278,50 @@ const createWindow = async () => {
   // new AppUpdater();
 };
 
-// const createPrintDialog = async () => {
-//   if (!mainWindow) {
-//     return;
-//   }
+const createPrintDialog = () => {
+  if (!mainWindow) {
+    return;
+  }
 
-//   scanDevices();
+  printDialog = new BrowserWindow({
+    parent: mainWindow,
+    modal: true,
+    show: false,
+    backgroundColor: 'white', 
+    width: 457,
+    height: 360,
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
 
-//   printDialog = new BrowserWindow({
-//     parent: mainWindow,
-//     modal: true,
-//     show: false,
-//     backgroundColor: 'white', 
-//     width: 457,
-//     height: 400,
-//     titleBarStyle: 'hidden',
-//     webPreferences: {
-//       preload: app.isPackaged
-//         ? path.join(__dirname, 'preload.js')
-//         : path.join(__dirname, '../../.erb/dll/preload.js'),
-//     },
-//   });
+  printDialog.loadURL(resolveHtmlPath('select-printer.html'));
 
-//   printDialog.loadURL(resolveHtmlPath('select-printer.html'));
+  printDialog.on('ready-to-show', () => {
+    printDialog?.show();
+    printDialog?.webContents.send('new-device', Object.keys(discoveredDevices));
+    noble.on('discover', async (peripheral) => {
+      const { localName } = peripheral.advertisement;
+      if (localName === undefined || localName.trim().length === 0) {
+        return;
+      }
+      if (!discoveredDevices[localName]) {
+        printDialog?.webContents.send('new-device', [localName]);
+      }
+      discoveredDevices[localName] = peripheral;
+    });
+    noble.startScanningAsync();
+  });
 
-//   printDialog.on('ready-to-show', () => {
-//     printDialog?.show();
-//   });
 
-//   printDialog.on('closed', () => {
-//     printDialog = null;
-//   });
-// };
+  printDialog.on('closed', async () => {
+    await noble.stopScanningAsync();
+    printDialog = null;
+  });
+};
 
 /**
  * Add event listeners...
@@ -246,11 +361,6 @@ app
   })
   .catch(console.log);
 
-type Devices = {
-  [key: string]: noble.Peripheral;
-};
-  
-let discoveredDevices: Devices = {};
 async function scanDevices(scanDurationInMs=5000) {
   discoveredDevices = {};
 
