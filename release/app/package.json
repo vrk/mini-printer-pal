@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "mini-printer-pal",
+  "version": "0.0.1",
+  "description": "mini photoshop for your mini printer",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "vrk",
+    "email": "sometimesvictoria@gmail.com",
+    "url": "https://github.com/vrk"
   },
   "main": "./dist/main/main.js",
   "scripts": {

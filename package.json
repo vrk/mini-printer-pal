@@ -13,6 +13,10 @@
   ],
   "license": "MIT",
   "main": "./src/main/main.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vrk/mini-printer-pal.git"
+  },
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -202,14 +206,21 @@
       "gatekeeperAssess": false
     },
     "dmg": {
+      "iconSize": 128,
+      "iconTextSize": 18,
+      "title": "${productName}",
+      "window": {
+        "width": 540,
+        "height": 380
+      },
       "contents": [
         {
-          "x": 130,
-          "y": 220
+          "x": 75,
+          "y": 126
         },
         {
-          "x": 410,
-          "y": 220,
+          "x": 337,
+          "y": 126,
           "type": "link",
           "path": "/Applications"
         }
