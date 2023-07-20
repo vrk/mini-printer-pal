@@ -20,6 +20,8 @@ node_modules
 
 release/app/dist
 release/build
+release/dmg-assets/*.app
+release/dmg-assets/*.dmg
 .erb/dll
 
 .idea
