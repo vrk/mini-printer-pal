@@ -111,6 +111,12 @@ function Hello() {
 
   const onClickToggleControls = () => {
     setImageSrcData("")
+    setSpecialMode(SpecialMode.None);
+  }
+
+  const onClickEnterQrCodeEditor = () => {
+    setImageSrcData("")
+    setSpecialMode(SpecialMode.QrCodeMode);
   }
 
   const onClickSwitchPhoto = () => {
@@ -164,6 +170,7 @@ function Hello() {
       <Printer>
         <div id="menu-items">
           <Button color="pink" label="open image in editor" fontSize={24} width={245} topBottomPadding={12} onClick={onClickSwitchPhoto}></Button>
+          <Button color="pink" label="make qr code" fontSize={24} width={245} topBottomPadding={12} onClick={onClickEnterQrCodeEditor}></Button>
           <Button color="pink" label="quit" fontSize={24} width={245} topBottomPadding={12} onClick={onClickQuit}></Button>
         </div>
       </Printer>
