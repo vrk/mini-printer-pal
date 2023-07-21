@@ -1,0 +1,5 @@
+owner: vrk
+repo: mini-printer-pal
+provider: github
+updaterCacheDirName: mini-printer-pal-updater
+

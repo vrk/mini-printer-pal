@@ -19,14 +19,10 @@ import contextMenu from 'electron-context-menu';
 import noble from "@abandonware/noble";
 
 
-
 contextMenu({
 	showSaveImageAs: true
 });
 
-
-
-const WINDOW_WIDTH_SMALL = 600;
 const WINDOW_WIDTH_LARGE = 1100;
 const WINDOW_HEIGHT = 800;
 
@@ -37,6 +33,7 @@ class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
+    autoUpdater.forceDevUpdateConfig
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
@@ -274,41 +271,5 @@ app
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
-
-    // const iconPath = path.join(__dirname, '../../assets/pengy-bigger.png');
-    // const appIcon = new Tray(iconPath)
-    // const contextMenu = Menu.buildFromTemplate([
-    //   { label: 'Item1', type: 'radio' },
-    //   { label: 'Item2', type: 'radio' }
-    // ]);
-  
-    // // Make a change to the context menu
-    // contextMenu.items[1].checked = false
-  
-    // // Call this again for Linux because we modified the context menu
-    // appIcon.setContextMenu(contextMenu)
-  
   })
   .catch(console.log);
-
-async function scanDevices(scanDurationInMs=5000) {
-  discoveredDevices = {};
-
-  noble.on('discover', async (peripheral) => {
-    const { localName } = peripheral.advertisement;
-    if (localName === undefined || localName.trim().length === 0) {
-      return;
-    }
-    discoveredDevices[localName] = peripheral;
-  });
-  noble.startScanningAsync();
-
-  await delay(scanDurationInMs);
-
-  await noble.stopScanningAsync();
-}
-
-
-function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
