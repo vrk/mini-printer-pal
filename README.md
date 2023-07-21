@@ -104,7 +104,7 @@ You can check on the status by `xcrun notarytool history --keychain-profile <pro
 
 It SHOULD only take a few minutes, though lol the first time I tried it, it took hoooooooours 🥲
 
-### 7. Create a GitHub Release
+### 7. Create & publish a new GitHub Release
 
 1. Go to https://github.com/vrk/mini-printer-pal/releases/new to draft a new release
 2. Make sure the tag name matches the version number set in "1. Bump version"
@@ -123,9 +123,11 @@ OK and "that's" "it" you're done!!!!
 
 1. Open an older release & check the version number
 2. After a few seconds, should see a notification like:
-3. If you quit immediately and restart, the auto-update won't work - soooo just keep the app open for a few min, maybe eat a snack
-4. Close Mini Printer Pal
-5. Reopen Mini Printer Pal & check the version number <--  should be the updated version!!
+<img width="350" alt="CleanShot 2023-07-21 at 12 20 13@2x" src="https://github.com/vrk/mini-printer-pal/assets/610200/d4125aad-35d3-4eae-b87f-e0a1529ff90d">
+
+4. If you quit immediately and restart, the auto-update won't work - soooo just keep the app open for a few min, maybe eat a snack
+5. Close Mini Printer Pal
+6. Reopen Mini Printer Pal & check the version number <--  should be the updated version!!
 
 
 ### Some misc release stuff
