@@ -1,0 +1,20 @@
+{
+  "title": "Mini Printer Pal",
+  "icon": "icon.icns",
+  "background": "background.png",
+  "icon-size": 128,
+  "contents": [
+    { "x": 128, "y": 165, "type": "file", "path": "Mini Printer Pal.app" },
+    { "x": 412, "y": 165, "type": "link", "path": "/Applications" }
+  ],
+  "window": {
+    "position": {
+      "x": 500,
+      "y": 500
+    },
+    "size": {
+      "width": 540,
+      "height": 420
+    }
+  }
+}
