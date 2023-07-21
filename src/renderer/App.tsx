@@ -14,8 +14,13 @@ import {
 
  // NOTE: Hiiii I am good at coding but this code is really bad SORRY t'was on a time crunch!
 
+ enum SpecialMode {
+  None,
+  QrCodeMode,
+  GalleryModel
+ }
 function Hello() {
-  const [inQrCodeMode, setInQrCodeMode] = useState(false);
+  const [specialMode, setSpecialMode] = useState(SpecialMode.None);
 
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
@@ -33,7 +38,7 @@ function Hello() {
   useEffect(() => {
     const onPaste = async (e: Event) => {
       e.preventDefault();
-      if (inQrCodeMode) {
+      if (specialMode !== SpecialMode.None) {
         return;
       }
       const clipboardItems = await navigator.clipboard.read() ;
@@ -169,7 +174,7 @@ function Hello() {
   </>
 
   let screen = mainMenuScreen;
-  if (inQrCodeMode) {
+  if (specialMode === SpecialMode.QrCodeMode) {
     screen = <>todo qr code mode thing</>;
   } else if (imageSrcData.length > 0) {
     screen = editImageScreen;
