@@ -1,12 +1,13 @@
 import { useState, useEffect} from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import QRCode from 'qrcode';
 import './App.css';
 
 import {
   getPrintData,
 } from './print-helper';
 
-import { Button, Toggle, Printer, AdvancedControls } from "./components";
+import { Button, Toggle, Printer, AdvancedControls, TextBox } from "./components";
 import { Photo } from './model/Photo';
 import {
   JARVIS_JUDICE_NINKE,
@@ -31,6 +32,8 @@ function Hello() {
   const [contrast, setContrast] = useState(100.0);
   const [lightness, setLightness] = useState(100.0);
   const [paperSize, setPaperSize] = useState("L");
+
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
 
   // phew this is really hacky
   const [shouldPromptSaveAfterLoad, setShouldPromptSaveAfterLoad] = useState(false);
@@ -104,6 +107,7 @@ function Hello() {
 
   const onClick = async () => {
     if (imageData) {
+      debugger;
       const printData = await getPrintData(imageData);
       window.electron.ipcRenderer.sendMessage('print-file', printData);
     }
@@ -111,12 +115,23 @@ function Hello() {
 
   const onClickToggleControls = () => {
     setImageSrcData("")
+    setIsDitherOn(true);
     setSpecialMode(SpecialMode.None);
   }
 
   const onClickEnterQrCodeEditor = () => {
     setImageSrcData("")
+    setIsDitherOn(false);
     setSpecialMode(SpecialMode.QrCodeMode);
+  }
+
+  const onClickGenerateQrCode = async () => {
+    const dataUrl = await QRCode.toDataURL(qrCodeUrl, {
+      // TODO: make this a shared constant - these are currently based on:
+      // const IMAGE_WIDTH = BYTES_PER_LINE * 8;
+      width: 70 * 8
+    })
+    setImageSrcData(dataUrl);
   }
 
   const onClickSwitchPhoto = () => {
@@ -129,6 +144,38 @@ function Hello() {
   const onClickQuit = () => {
     window.electron.ipcRenderer.sendMessage('quit');
   }
+  
+  const qrCodeScreen = <>
+      <div id="main">
+        <div id="draggable-header-region"></div>
+        <div id="controls">
+          <Button onClick={onClickToggleControls} label="<<"></Button>
+          <TextBox onChange={(e) => { setQrCodeUrl(e.currentTarget.value) }} />
+          <Button onClick={onClickGenerateQrCode} label="make!"></Button>
+        </div>
+        <div id="printer">
+          <Printer size={paperSize} imgSrc={canvasDataSrc}></Printer>
+        </div>
+        <div id="printing">
+          <Button onClick={onClick} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
+          (or save as png)
+        </div>
+      </div>
+      <AdvancedControls
+        ditherKernel={ditherKernel}
+        setDitherKernel={setDitherKernel}
+        scaledImagePercentage={scaledImagePercentage}
+        setScaledImagePercentage={setScaledImagePercentage}
+        paperSize={paperSize}
+        setPaperSize={setPaperSize}
+        brightness={brightness}
+        setBrightness={setBrightness}
+        contrast={contrast}
+        setContrast={setContrast}
+        lightness={lightness}
+        setLightness={setLightness}
+      ></AdvancedControls>
+    </>;
   
   const editImageScreen = <>
       <div id="main">
@@ -182,7 +229,7 @@ function Hello() {
 
   let screen = mainMenuScreen;
   if (specialMode === SpecialMode.QrCodeMode) {
-    screen = <>todo qr code mode thing</>;
+    screen = qrCodeScreen;
   } else if (imageSrcData.length > 0) {
     screen = editImageScreen;
   }

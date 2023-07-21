@@ -67,6 +67,7 @@ ipcMain.on('print-to-bluetooth', async (event, deviceName) => {
     discoveredCharacteristics[deviceName] = await getWritableCharacteristic(discoveredDevices[deviceName]);
   }
   const copiedData = [...printfileData];
+  console.log('hi data here');
   printfileData = null;
   discoveredCharacteristics[deviceName].write(Buffer.from(copiedData), false, (error: string) => {
   });

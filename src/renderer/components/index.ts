@@ -8,3 +8,4 @@ export { default as RadioButton } from './RadioButton';
 export { default as Select } from './Select';
 export { default as Slider } from './Slider';
 export { default as Toggle } from './Toggle';
+export { default as TextBox } from './TextBox';
