@@ -12,7 +12,11 @@ import {
   JARVIS_JUDICE_NINKE,
 } from "@thi.ng/pixel-dither";    
 
+ // NOTE: Hiiii I am good at coding but this code is really bad SORRY t'was on a time crunch!
+
 function Hello() {
+  const [inQrCodeMode, setInQrCodeMode] = useState(false);
+
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
   const [ditherKernel, setDitherKernel] = useState(JARVIS_JUDICE_NINKE);
@@ -29,6 +33,9 @@ function Hello() {
   useEffect(() => {
     const onPaste = async (e: Event) => {
       e.preventDefault();
+      if (inQrCodeMode) {
+        return;
+      }
       const clipboardItems = await navigator.clipboard.read() ;
     
       for (const clipboardItem of clipboardItems) {
@@ -160,10 +167,17 @@ function Hello() {
       </p>
     </div>
   </>
+
+  let screen = mainMenuScreen;
+  if (inQrCodeMode) {
+    screen = <>todo qr code mode thing</>;
+  } else if (imageSrcData.length > 0) {
+    screen = editImageScreen;
+  }
   
   return (
     <div id="container">
-      {imageSrcData.length === 0 ? mainMenuScreen : editImageScreen}
+      {screen}
     </div>
   );
 }
