@@ -22,6 +22,10 @@ release/app/dist
 release/build
 release/dmg-assets/*.app
 release/dmg-assets/*.dmg
+release/dmg-assets/*.zip
+release/dmg-assets/mac
+release/dmg-assets/mac-arm64
+release/dmg-assets/latest-mac.yml
 .erb/dll
 
 .idea
