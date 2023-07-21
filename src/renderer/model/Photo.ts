@@ -82,7 +82,6 @@ export class Photo {
       return;
     }
 
-    // TODO: brightness filter
     const pixelData = this.getImageData();
     this.lightnenPixels(pixelData);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -127,6 +126,7 @@ export class Photo {
     return this.canvas.toDataURL();
     // return this.imageElement.src;
   }
+
   getCanvas(): HTMLElement {
     return this.canvas as HTMLElement;
   }

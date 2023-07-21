@@ -53,7 +53,9 @@ ipcMain.on('print-file', async (event, data: number[]) => {
 })
 
 ipcMain.on('print-to-png', async () => {
-  console.log('TODO: print to png');
+  if (mainWindow) {
+    mainWindow.webContents.send('save-to-png');
+  }
 });
 
 ipcMain.on('print-to-bluetooth', async (event, deviceName) => {

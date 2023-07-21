@@ -5,7 +5,7 @@ form.addEventListener(
   (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const { destination } = data;
+    const destination = data.get('destination');
     if (destination === "topng") {
       window.electron.ipcRenderer.sendMessage('print-to-png');
       window.electron.ipcRenderer.sendMessage('close-print-dialog');

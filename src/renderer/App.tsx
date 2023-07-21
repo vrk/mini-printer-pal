@@ -23,6 +23,9 @@ function Hello() {
   const [lightness, setLightness] = useState(100.0);
   const [paperSize, setPaperSize] = useState("L");
 
+  // phew this is really hacky
+  const [shouldPromptSaveAfterLoad, setShouldPromptSaveAfterLoad] = useState(false);
+
   useEffect(() => {
     const onPaste = async (e: Event) => {
       e.preventDefault();
@@ -52,11 +55,15 @@ function Hello() {
     console.log("ADDING EVENT LISTENER");
     document.addEventListener('paste', onPaste)
 
+    window.electron.ipcRenderer.on('save-to-png', () => {
+      setShouldPromptSaveAfterLoad(true);
+    });
+
     // cleanup this component
     return () => {
       console.log("REMOVING EVENT LISTENER");
       document.removeEventListener('keydown', onPaste);
-      window.electron.ipcRenderer.removeAllListeners('file-chosen');
+      window.electron.ipcRenderer.removeAllListeners('save-to-png');
     };
   }, []);
 
@@ -73,6 +80,13 @@ function Hello() {
     photo.loadImage().then(() => {
       imageData = photo.getImageData();
       setCanvasDataSrc(photo.getCanvasDataUrl());
+      if (shouldPromptSaveAfterLoad) {
+        const link = document.createElement('a'); 
+        link.download = `untitled.png`;
+        link.href = canvasDataSrc;
+        link.click();
+        setShouldPromptSaveAfterLoad(false);
+      }
     });
   }
 
@@ -90,7 +104,6 @@ function Hello() {
   const onClickSwitchPhoto = () => {
     window.electron.ipcRenderer.sendMessage('choose-file');
     window.electron.ipcRenderer.once('file-chosen', (base64) => {
-      console.log('hi');
       const src = `data:image/jpg;base64,${base64}`
       setImageSrcData(src);
     });

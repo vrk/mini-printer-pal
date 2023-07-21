@@ -9,6 +9,7 @@ export type Channels = 'ipc-example'|
   'quit'|
   'open-print-dialog'|
   'print-to-bluetooth'|
+  'save-to-png'|
   'close-print-dialog';
 
 const electronHandler = {
