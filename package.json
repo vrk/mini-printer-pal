@@ -208,13 +208,6 @@
       "notarize": false
     },
     "dmg": {
-      "iconSize": 128,
-      "iconTextSize": 18,
-      "title": "${productName}",
-      "window": {
-        "width": 540,
-        "height": 380
-      },
       "contents": [
         {
           "x": 75,
