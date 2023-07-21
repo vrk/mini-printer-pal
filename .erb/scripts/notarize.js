@@ -22,9 +22,10 @@ exports.default = async function notarizeMacos(context) {
   const appName = context.packager.appInfo.productFilename;
 
   await notarize({
-    appBundleId: build.appId,
     appPath: `${appOutDir}/${appName}.app`,
     appleId: process.env.APPLE_ID,
     appleIdPassword: process.env.APPLE_ID_PASS,
+    teamId: process.env.TEAM_ID,
+    tool: "notarytool"
   });
 };
