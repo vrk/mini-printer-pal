@@ -26,7 +26,6 @@ function Hello() {
   useEffect(() => {
     const onPaste = async (e: Event) => {
       e.preventDefault();
-      console.log("PASTIn");
       const clipboardItems = await navigator.clipboard.read() ;
     
       for (const clipboardItem of clipboardItems) {
@@ -57,6 +56,7 @@ function Hello() {
     return () => {
       console.log("REMOVING EVENT LISTENER");
       document.removeEventListener('keydown', onPaste);
+      window.electron.ipcRenderer.removeAllListeners('file-chosen');
     };
   }, []);
 
@@ -89,8 +89,8 @@ function Hello() {
 
   const onClickSwitchPhoto = () => {
     window.electron.ipcRenderer.sendMessage('choose-file');
-
-    window.electron.ipcRenderer.on('file-chosen', (base64) => {
+    window.electron.ipcRenderer.once('file-chosen', (base64) => {
+      console.log('hi');
       const src = `data:image/jpg;base64,${base64}`
       setImageSrcData(src);
     });
@@ -98,7 +98,6 @@ function Hello() {
   const onClickQuit = () => {
     window.electron.ipcRenderer.sendMessage('quit');
   }
-
   
   const editImageScreen = <>
       <div id="main">

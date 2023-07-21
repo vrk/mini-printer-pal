@@ -95,7 +95,6 @@ export async function getPrintData(imageData: ImageData) {
           printData[index++] = byte;
         }
       } else {
-        console.log(line);
         for (let x = 0; x < BYTES_PER_LINE; x++) {
           printData[index++] = 0;
         }

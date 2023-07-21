@@ -48,12 +48,6 @@ window.electron.ipcRenderer.on('new-device', (devices) => {
   }
 });
 
-// const selectElement = document.getElementById("select-printer");
-// selectElement.addEventListener("change", (event) => {
-//   result.textContent = `You like ${event.target.value}`;
-// });
-
-
 const selectElement = document.getElementById("select-printer");
 const radioButtons = document.querySelectorAll('input[name="destination"]');
 for (const radioButton of radioButtons) {
@@ -63,7 +57,6 @@ for (const radioButton of radioButtons) {
     selectElement.disabled = radioButton.value !== "toprinter";
   }
   radioButton.addEventListener("click", () => {
-    console.log('huh');
     localStorage.setItem("last-selected-input", radioButton.value);
     if (radioButton.value === "toprinter") {
       selectElement.disabled = false;
@@ -72,8 +65,3 @@ for (const radioButton of radioButtons) {
     }
   })
 }
-
-
-// selectElement.addEventListener("change", (event) => {
-//   result.textContent = `You like ${event.target.value}`;
-// });
