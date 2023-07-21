@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -13,7 +13,6 @@ import {
 } from "@thi.ng/pixel-dither";    
 
 function Hello() {
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [imageSrcData, setImageSrcData] = useState("");
   const [canvasDataSrc, setCanvasDataSrc] = useState("");
   const [ditherKernel, setDitherKernel] = useState(JARVIS_JUDICE_NINKE);
@@ -23,6 +22,43 @@ function Hello() {
   const [contrast, setContrast] = useState(100.0);
   const [lightness, setLightness] = useState(100.0);
   const [paperSize, setPaperSize] = useState("L");
+
+  useEffect(() => {
+    const onPaste = async (e: Event) => {
+      e.preventDefault();
+      console.log("PASTIn");
+      const clipboardItems = await navigator.clipboard.read() ;
+    
+      for (const clipboardItem of clipboardItems) {
+        // For files from `navigator.clipboard.read()`.
+        const [ imageType ] = clipboardItem.types.filter(type => type.startsWith('image/'))
+        if (!imageType) {
+          return;
+        }
+        const blob = await clipboardItem.getType(imageType);
+        
+        const reader = new FileReader();
+        const getBlob = async () => {
+          return new Promise((resolve) => {
+            reader.onload = function(event) {
+              resolve(event.target?.result); // data url!
+            };
+            reader.readAsDataURL(blob);
+          })
+        }
+        const dataUrl: any = await getBlob();
+        setImageSrcData(dataUrl);
+      }
+    };
+    console.log("ADDING EVENT LISTENER");
+    document.addEventListener('paste', onPaste)
+
+    // cleanup this component
+    return () => {
+      console.log("REMOVING EVENT LISTENER");
+      document.removeEventListener('keydown', onPaste);
+    };
+  }, []);
 
   const photo = new Photo(
     imageSrcData,
@@ -50,6 +86,7 @@ function Hello() {
   const onClickToggleControls = () => {
     setImageSrcData("")
   }
+
   const onClickSwitchPhoto = () => {
     window.electron.ipcRenderer.sendMessage('choose-file');
 
@@ -62,32 +99,6 @@ function Hello() {
     window.electron.ipcRenderer.sendMessage('quit');
   }
 
-  document.addEventListener('paste', async (e) => {
-    e.preventDefault();
-    const clipboardItems = await navigator.clipboard.read() ;
-  
-    for (const clipboardItem of clipboardItems) {
-      // For files from `navigator.clipboard.read()`.
-      console.log(clipboardItem.types)
-      const [ imageType ] = clipboardItem.types.filter(type => type.startsWith('image/'))
-      if (!imageType) {
-        return;
-      }
-      const blob = await clipboardItem.getType(imageType);
-      
-      const reader = new FileReader();
-      const getBlob = async () => {
-        return new Promise((resolve) => {
-          reader.onload = function(event) {
-            resolve(event.target?.result); // data url!
-          };
-          reader.readAsDataURL(blob);
-        })
-      }
-      const dataUrl = await getBlob();
-      setImageSrcData(dataUrl);
-    }
-  });
   
   const editImageScreen = <>
       <div id="main">
