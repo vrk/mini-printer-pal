@@ -71,74 +71,6 @@ ipcMain.on('print-to-png', async () => {
   console.log('TODO: print to png');
 });
 
-function getInitPrintData() {
-  let printData = [];
-  let index = 0;
-
-  // ********
-  // FROM https://github.com/vivier/phomemo-tools/tree/master#31-header
-  // PRINTING HEADER
-
-  // Initialize printer
-  printData[index++] = 27;
-  printData[index++] = 64;
-
-  // Select justification
-  printData[index++] = 27;
-  printData[index++] = 97;
-
-  // Justify (0=left, 1=center, 2=right)
-  printData[index++] = 0;
-
-  // End of header
-  printData[index++] = 31;
-  printData[index++] = 17;
-  printData[index++] = 2;
-  printData[index++] = 4;
-  // ********
-
-
-  printData[index++] = 29
-  printData[index++] = 118
-  printData[index++] = 48
-
-  // Mode: 0=normal, 1=double width, 2=double height, 3=quadruple
-  printData[index++] = 0
-
-  // Bytes per line
-  printData[index++] = 70
-  printData[index++] = 0
-
-  // Number of lines to print in this block.
-  printData[index++] = 10;
-  printData[index++] = 0
-
-  for (let y = 0; y < 10; y++) {
-    for (let x = 0; x < 70; x++) {
-      printData[index++] = 0;
-    }
-  }
-  
-  printData[index++] = 27;
-  printData[index++] = 100;
-  printData[index++] = 2;
-
-  // FOOTER
-  printData[index++] = 31;
-  printData[index++] = 17;
-  printData[index++] = 8;
-  // \x1f\x11\x0e
-  printData[index++] = 31;
-  printData[index++] = 17;
-  printData[index++] = 14;
-
-  // x1f\x11\x07
-  printData[index++] = 31;
-  printData[index++] = 17;
-  printData[index++] = 7;
-  return printData;
-}
-
 ipcMain.on('print-to-bluetooth', async (event, deviceName) => {
   console.log(deviceName);
   if (!printfileData || !deviceName) {
@@ -149,10 +81,8 @@ ipcMain.on('print-to-bluetooth', async (event, deviceName) => {
   }
   const copiedData = [...printfileData];
   printfileData = null;
-  // discoveredCharacteristics[deviceName].write(Buffer.from(getInitPrintData()), false, (error: string) => {
-    discoveredCharacteristics[deviceName].write(Buffer.from(copiedData), false, (error: string) => {
-    });
-  // });
+  discoveredCharacteristics[deviceName].write(Buffer.from(copiedData), false, (error: string) => {
+  });
 })
   
 async function getWritableCharacteristic(peripheral: noble.Peripheral) {
