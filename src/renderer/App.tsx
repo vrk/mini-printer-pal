@@ -49,18 +49,12 @@ function Hello() {
 
   const onClickToggleControls = () => {
     setImageSrcData("")
-    setIsFirstLoad(true);
-    window.electron.ipcRenderer.sendMessage('resize-window', "mainMenu");
   }
   const onClickSwitchPhoto = () => {
     window.electron.ipcRenderer.sendMessage('choose-file');
 
     window.electron.ipcRenderer.on('file-chosen', (base64) => {
       const src = `data:image/jpg;base64,${base64}`
-      if (isFirstLoad) {
-        window.electron.ipcRenderer.sendMessage('resize-window', "editImage");
-        setIsFirstLoad(false);
-      }
       setImageSrcData(src);
     });
   }
@@ -91,10 +85,6 @@ function Hello() {
         })
       }
       const dataUrl = await getBlob();
-      if (isFirstLoad) {
-        window.electron.ipcRenderer.sendMessage('resize-window', "editImage");
-        setIsFirstLoad(false);
-      }
       setImageSrcData(dataUrl);
     }
   });

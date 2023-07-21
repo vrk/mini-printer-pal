@@ -3,7 +3,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 export type Channels = 'ipc-example'|
-  'resize-window'|
   'choose-file'|
   'file-chosen'|
   'print-file'|

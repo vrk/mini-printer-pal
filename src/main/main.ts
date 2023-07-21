@@ -1,15 +1,7 @@
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `npm run build` or `npm run build:main`, this file is compiled to
- * `./src/main.js` using webpack. This gives us some performance wins.
- */
 import path from 'path';
-import { dialog, app, BrowserWindow, shell, ipcMain,Tray, Menu } from 'electron';
+import { dialog, app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -18,16 +10,12 @@ import fs from 'fs';
 import contextMenu from 'electron-context-menu';
 import noble from "@abandonware/noble";
 
-
 contextMenu({
 	showSaveImageAs: true
 });
 
 const WINDOW_WIDTH_LARGE = 1100;
 const WINDOW_HEIGHT = 800;
-
-const WINDOW_WIDTH_MAIN_MENU = 800;
-const WINDOW_HEIGHT_MAIN_MENU = 550;
 
 class AppUpdater {
   constructor() {
@@ -93,18 +81,6 @@ async function getWritableCharacteristic(peripheral: noble.Peripheral) {
   return characteristic;
 }
 
-ipcMain.on('resize-window', async (event, type: string) => {
-  if (mainWindow) {
-    if (type === "editImage") {
-      mainWindow?.center();
-      mainWindow.setSize(WINDOW_WIDTH_LARGE, WINDOW_HEIGHT);
-    } else if (type === "mainMenu") {
-      mainWindow.setSize(WINDOW_WIDTH_MAIN_MENU, WINDOW_HEIGHT_MAIN_MENU);
-      mainWindow.center();
-    }
-  }
-});
-
 ipcMain.on("close-print-dialog", async (event, arg) => {
   if (!printDialog) {
     return;
@@ -162,8 +138,8 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     backgroundColor: '#d1deb6', 
-    width: WINDOW_WIDTH_MAIN_MENU,
-    height: WINDOW_HEIGHT_MAIN_MENU,
+    width: WINDOW_WIDTH_LARGE,
+    height: WINDOW_HEIGHT,
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     webPreferences: {
