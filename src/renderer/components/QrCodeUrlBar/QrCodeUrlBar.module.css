@@ -1,0 +1,23 @@
+.component input {
+  font-family: "Gaegu", monospace;
+  font-size: 24px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  -webkit-font-smoothing: antialiased;
+  border: 2px solid #FFC0E0;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.667);
+}
+
+.component div {
+  overflow-wrap: anywhere;
+  user-select: text;
+  -webkit-app-region: no-drag;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.component {
+  width: 100%;
+
+}

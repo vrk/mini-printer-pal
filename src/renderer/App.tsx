@@ -7,9 +7,10 @@ import {
   getPrintData,
 } from './print-helper';
 
-import { Button, Toggle, Printer, AdvancedControls, QrCodeUrlBar } from "./components";
+import { Button, Toggle, Printer, AdvancedControls, QrCodeUrlBar, QrCodeControls } from "./components";
 import { Photo } from './model/Photo';
 import {
+  ATKINSON,
   JARVIS_JUDICE_NINKE,
 } from "@thi.ng/pixel-dither";    
 
@@ -42,9 +43,7 @@ function Hello() {
     const onPaste = async (e: Event) => {
       // Use normal paste behavior when in special modes, i.e. not in the image editing mode.
       if (specialMode !== SpecialMode.None) {
-        const pasteText = await navigator.clipboard.readText();
-        document.execCommand('insertText', false /** useless param */, pasteText);
-        return;
+        return false;
       }
 
       // Otherwise, listen for image handling
@@ -80,7 +79,7 @@ function Hello() {
 
     // cleanup this component
     return () => {
-      document.removeEventListener('keydown', onPaste);
+      document.removeEventListener('paste', onPaste);
       window.electron.ipcRenderer.removeAllListeners('save-to-png');
     };
   }, [specialMode]);
@@ -176,20 +175,16 @@ function Hello() {
           (or save as png)
         </div>
       </div>
-      <AdvancedControls
+      <QrCodeControls
         ditherKernel={ditherKernel}
         setDitherKernel={setDitherKernel}
         scaledImagePercentage={scaledImagePercentage}
         setScaledImagePercentage={setScaledImagePercentage}
         paperSize={paperSize}
         setPaperSize={setPaperSize}
-        brightness={brightness}
-        setBrightness={setBrightness}
-        contrast={contrast}
-        setContrast={setContrast}
         lightness={lightness}
         setLightness={setLightness}
-      ></AdvancedControls>
+      ></QrCodeControls>
     </>;
   
   const editImageScreen = <>

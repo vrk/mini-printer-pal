@@ -1,0 +1,95 @@
+.component {
+  width: calc(1100px / 2);
+  left: calc(1100px / 2);
+  background: rgba(204, 222, 167,0.5);
+  background-blend-mode: multiply;
+  border-left: 4px dashed white;
+  /* align-items: center; */
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 190px;
+}
+
+.dither {
+  gap: 18px;
+  margin-top: 10px;
+  width: 90%;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.main {
+  width: 90%;
+}
+
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.heading {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  margin-top: -150px;
+}
+
+.ditherOpen {
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 80%;;
+}
+
+.draggable {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 20px;
+  z-index: -1;
+  -webkit-app-region: drag;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 170px 170px;
+  grid-column-gap: 80px;
+  grid-row-gap: 10px;
+  align-items: top;
+  align-content: center;
+}
+
+.paperSize {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}

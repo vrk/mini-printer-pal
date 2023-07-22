@@ -23,6 +23,7 @@ import {
 import {
   ditherWith,
   type DitherKernel,
+  ATKINSON,
 } from "@thi.ng/pixel-dither";    
   
 const BYTES_PER_LINE = 70;
@@ -72,22 +73,22 @@ export class Photo {
     const startDrawX = IMAGE_WIDTH - scaledImageWidth; 
     this.context.filter = `brightness(${this.brightness}%) contrast(${this.contrast}%)`;
     this.context.drawImage(this.imageElement, startDrawX, 0, scaledImageWidth, scaledHeight);
-    if (!this.kernel) {
-      return;
+    if (this.kernel) {
+      const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
+      ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
     }
-    const intBuffer = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
-    ditherWith(this.kernel, intBuffer.copy()).blitCanvas(this.canvas);
 
     if (this.lightness > 99) {
       return;
     }
 
+    const ditherAlgo = this.kernel || ATKINSON;
     const pixelData = this.getImageData();
     this.lightnenPixels(pixelData);
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.putImageData(pixelData, 0, 0);
     const intBuffer2 = intBufferFromCanvas(this.canvas, GRAY_ALPHA8);
-    ditherWith(this.kernel, intBuffer2.copy()).blitCanvas(this.canvas);
+    ditherWith(ditherAlgo, intBuffer2.copy()).blitCanvas(this.canvas);
   }
 
   private lightnenPixels(pixelData: ImageData) {
