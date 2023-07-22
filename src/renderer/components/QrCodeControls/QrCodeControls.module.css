@@ -1,6 +1,6 @@
 .component {
-  width: calc(1100px / 2);
-  left: calc(1100px / 2);
+  width: 50vw;
+  left: 50vw;
   background: rgba(204, 222, 167,0.5);
   background-blend-mode: multiply;
   border-left: 4px dashed white;
@@ -43,6 +43,9 @@
   width: 90%;
 }
 
+.presetsSection {
+  width: 100%;
+}
 
 .container {
   width: 100%;
@@ -81,11 +84,12 @@
 
 .controls {
   display: grid;
-  grid-template-columns: 170px 170px;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 80px;
   grid-row-gap: 10px;
   align-items: top;
   align-content: center;
+  width: 80%;
 }
 
 .paperSize {

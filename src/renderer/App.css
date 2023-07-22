@@ -58,7 +58,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: calc(1100px / 2);
+  width: 50vw;
   flex-shrink: 0;
   align-items: center;
   height: 100%;
