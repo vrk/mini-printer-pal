@@ -7,7 +7,7 @@ import {
   getPrintData,
 } from './print-helper';
 
-import { Button, Toggle, Printer, AdvancedControls, TextBox } from "./components";
+import { Button, Toggle, Printer, AdvancedControls, QrCodeUrlBar } from "./components";
 import { Photo } from './model/Photo';
 import {
   JARVIS_JUDICE_NINKE,
@@ -40,10 +40,15 @@ function Hello() {
 
   useEffect(() => {
     const onPaste = async (e: Event) => {
-      e.preventDefault();
+      // Use normal paste behavior when in special modes, i.e. not in the image editing mode.
       if (specialMode !== SpecialMode.None) {
+        const pasteText = await navigator.clipboard.readText();
+        document.execCommand('insertText', false /** useless param */, pasteText);
         return;
       }
+
+      // Otherwise, listen for image handling
+      e.preventDefault();
       const clipboardItems = await navigator.clipboard.read() ;
     
       for (const clipboardItem of clipboardItems) {
@@ -67,7 +72,6 @@ function Hello() {
         setImageSrcData(dataUrl);
       }
     };
-    console.log("ADDING EVENT LISTENER");
     document.addEventListener('paste', onPaste)
 
     window.electron.ipcRenderer.on('save-to-png', () => {
@@ -76,11 +80,10 @@ function Hello() {
 
     // cleanup this component
     return () => {
-      console.log("REMOVING EVENT LISTENER");
       document.removeEventListener('keydown', onPaste);
       window.electron.ipcRenderer.removeAllListeners('save-to-png');
     };
-  }, []);
+  }, [specialMode]);
 
   const photo = new Photo(
     imageSrcData,
@@ -107,7 +110,6 @@ function Hello() {
 
   const onClick = async () => {
     if (imageData) {
-      debugger;
       const printData = await getPrintData(imageData);
       window.electron.ipcRenderer.sendMessage('print-file', printData);
     }
@@ -115,21 +117,33 @@ function Hello() {
 
   const onClickToggleControls = () => {
     setImageSrcData("")
+    setCanvasDataSrc("");
     setIsDitherOn(true);
     setSpecialMode(SpecialMode.None);
   }
 
   const onClickEnterQrCodeEditor = () => {
     setImageSrcData("")
+    setCanvasDataSrc("");
     setIsDitherOn(false);
     setSpecialMode(SpecialMode.QrCodeMode);
   }
 
   const onClickGenerateQrCode = async () => {
-    const dataUrl = await QRCode.toDataURL(qrCodeUrl, {
+    generateQrCode(qrCodeUrl)
+  }
+
+  const generateQrCode = async (text: string) => {
+    if (text.length === 0) {
+      setImageSrcData("");
+      setCanvasDataSrc("");
+      return;
+    }
+    const dataUrl = await QRCode.toDataURL(text, {
       // TODO: make this a shared constant - these are currently based on:
       // const IMAGE_WIDTH = BYTES_PER_LINE * 8;
-      width: 70 * 8
+      width: 70 * 8,
+      margin: 1
     })
     setImageSrcData(dataUrl);
   }
@@ -149,9 +163,10 @@ function Hello() {
       <div id="main">
         <div id="draggable-header-region"></div>
         <div id="controls">
-          <Button onClick={onClickToggleControls} label="<<"></Button>
-          <TextBox onChange={(e) => { setQrCodeUrl(e.currentTarget.value) }} />
-          <Button onClick={onClickGenerateQrCode} label="make!"></Button>
+          <QrCodeUrlBar onChange={(e) => { 
+            setQrCodeUrl(e.currentTarget.value);
+            generateQrCode(e.currentTarget.value);
+          }} placeholder="paste URL here" type="url" label={qrCodeUrl} autoFocus/>
         </div>
         <div id="printer">
           <Printer size={paperSize} imgSrc={canvasDataSrc}></Printer>
