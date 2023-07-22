@@ -107,14 +107,14 @@ function Hello() {
     });
   }
 
-  const onClick = async () => {
+  const onClickPrintImage = async () => {
     if (imageData) {
       const printData = await getPrintData(imageData);
       window.electron.ipcRenderer.sendMessage('print-file', printData);
     }
   };
 
-  const onClickToggleControls = () => {
+  const onClickBackToHome = () => {
     setImageSrcData("")
     setCanvasDataSrc("");
     setIsDitherOn(true);
@@ -126,10 +126,6 @@ function Hello() {
     setCanvasDataSrc("");
     setIsDitherOn(false);
     setSpecialMode(SpecialMode.QrCodeMode);
-  }
-
-  const onClickGenerateQrCode = async () => {
-    generateQrCode(qrCodeUrl)
   }
 
   const generateQrCode = async (text: string) => {
@@ -171,7 +167,7 @@ function Hello() {
           <Printer size={paperSize} imgSrc={canvasDataSrc}></Printer>
         </div>
         <div id="printing">
-          <Button onClick={onClick} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
+          <Button onClick={onClickPrintImage} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
           (or save as png)
         </div>
       </div>
@@ -191,7 +187,7 @@ function Hello() {
       <div id="main">
         <div id="draggable-header-region"></div>
         <div id="controls">
-          <Button onClick={onClickToggleControls} label="<<"></Button>
+          <Button onClick={onClickBackToHome} label="<<"></Button>
           <Button label="change image" onClick={onClickSwitchPhoto}></Button>
           <Toggle onClick={() => { 
             setIsDitherOn(!isDitherOn)
@@ -201,7 +197,7 @@ function Hello() {
           <Printer size={paperSize} imgSrc={canvasDataSrc}></Printer>
         </div>
         <div id="printing">
-          <Button onClick={onClick} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
+          <Button onClick={onClickPrintImage} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
           (or save as png)
         </div>
       </div>
