@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './Preset.module.css'; // Import css modules stylesheet as styles
 
-export interface PresetProps {
+export interface PresetProps extends React.ComponentProps<"div">  {
   label: string;
   type: "photo"|"light"|"dark"
   onClick?: () => void;
@@ -10,9 +10,10 @@ export interface PresetProps {
 const Preset = ({
   label,
   type,
-  onClick
+  onClick,
+  ...divProps
 }: PresetProps) => {
-  return <div className={`${styles.component} ${styles[type]}`} onClick={onClick}>
+  return <div {...divProps} className={`${styles.component} ${styles[type]}`} onClick={onClick}>
     <div className={styles.label}>{label}</div>
   </div>
 }

@@ -131,9 +131,14 @@ const File = ({
       <CloudHeader rotate="3deg" label="presets"></CloudHeader>
     </div>
     <div className={`${styles.row} ${styles.main}`}>
-      <Preset label="photo" type="photo" onClick={photoPreset}/>
-      <Preset label="light bg sticker" type="light" onClick={lightPreset} />
-      <Preset label="dark bg sticker" type="dark"  onClick={darkPreset}/>
+      <Preset data-tooltip="some defaults for
+printing a photo" label="photo" type="photo" onClick={photoPreset}/>
+      <Preset  data-tooltip="some defaults for making
+line art with an image that
+has a light background" label="light bg sticker" type="light" onClick={lightPreset} />
+      <Preset  data-tooltip="some defaults for making
+line art with an image that
+has a dark background"  label="dark bg sticker" type="dark"  onClick={darkPreset}/>
     </div>
     <FileControls
     ditherKernel={ditherKernel}

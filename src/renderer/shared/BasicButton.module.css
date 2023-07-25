@@ -5,7 +5,6 @@
   font-style: normal;
 }
 
-
 .button,
 input.button::file-selector-button
 {
@@ -13,6 +12,7 @@ input.button::file-selector-button
   font-family: "Gaegu", monospace;
   border-radius: 5px;
   -webkit-font-smoothing: antialiased;
+  height: max-content;
 }
 
 .pink,

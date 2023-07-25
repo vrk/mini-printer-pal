@@ -121,3 +121,63 @@ body {
   display: flex;
   gap: 12px;
 }
+
+*[data-tooltip-top]::after,
+*[data-tooltip]::after {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  padding: 2px 5px;
+  border-radius: 3px;
+  line-height: 1;
+  width: max-content;
+  white-space: pre-wrap;
+  text-align: center;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  box-sizing: border-box;
+  color: #494949;
+  font-family: 'Gaegu';
+  font-size: 14px;
+  transition: none;
+  opacity: 0;
+  display: block;
+  text-align: center;
+}
+
+*[data-tooltip-top]::after {
+  top: calc(-100% - 2px);
+  content: attr(data-tooltip-top);
+}
+
+*[data-tooltip]::after {
+  top: calc(100% + 7px);
+  content: attr(data-tooltip);
+}
+
+*[data-tooltip-top]:hover::after,
+*[data-tooltip]:hover::after {
+  opacity: 1;
+  transition: opacity ease-in 0.25s;
+  transition-delay: 1s;
+}
+
+*[data-tooltip-top]::after,
+*[data-tooltip] {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  75% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+}

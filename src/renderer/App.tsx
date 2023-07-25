@@ -11,7 +11,6 @@ import {
 import { Button, Toggle, Printer, AdvancedControls, QrCodeUrlBar, QrCodeControls, ResetButton, NavButton } from "./components";
 import { Photo } from './model/Photo';
 import {
-  ATKINSON,
   JARVIS_JUDICE_NINKE,
 } from "@thi.ng/pixel-dither";    
 
@@ -84,6 +83,13 @@ function Hello() {
       window.electron.ipcRenderer.removeAllListeners('save-to-png');
     };
   }, [specialMode]);
+
+  const resetAll = () => {
+    setBrightness(100.0)
+    setContrast(100.0)
+    setDitherKernel(JARVIS_JUDICE_NINKE)
+    setLightness(100.0)
+  }
 
   const photo = new Photo(
     imageSrcData,
@@ -172,8 +178,8 @@ function Hello() {
           (or save as png)
         </div>
         <nav id="back-home">
-          <NavButton onClick={onClickBackToHome} icon="home"></NavButton>
-          <NavButton onClick={onClickBackToHome} icon="help"></NavButton>
+          <NavButton data-tooltip-top="main menu" onClick={onClickBackToHome} icon="home"></NavButton>
+          <NavButton data-tooltip-top="help" onClick={onClickBackToHome} icon="help"></NavButton>
         </nav>
       </div>
       <QrCodeControls
@@ -192,9 +198,9 @@ function Hello() {
       <div id="main">
         <div id="draggable-header-region"></div>
         <div id="controls">
-          <ResetButton></ResetButton>
-          <Button label="change image" onClick={onClickSwitchPhoto}></Button>
-          <Toggle onClick={() => { 
+          <ResetButton data-tooltip="reset fiddlings" data-offset="-64px" onClick={resetAll}></ResetButton>
+          <Button label="change image" onClick={onClickSwitchPhoto} leftRightPadding={30} data-tooltip="select a new image"></Button>
+          <Toggle data-tooltip="toggle dither view"  onClick={() => { 
             setIsDitherOn(!isDitherOn)
           }} isOn={isDitherOn}></Toggle>
         </div>
@@ -206,7 +212,7 @@ function Hello() {
           (or save as png)
         </div>
         <nav id="back-home">
-          <NavButton onClick={onClickBackToHome} icon="home"></NavButton>
+          <NavButton data-tooltip-top="main screen" onClick={onClickBackToHome} icon="home"></NavButton>
           <NavButton onClick={onClickBackToHome} icon="help"></NavButton>
         </nav>
       </div>
