@@ -2,12 +2,13 @@ import { useState, useEffect} from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import QRCode from 'qrcode';
 import './App.css';
+import arrow from './assets/images/reset-arrow.png'
 
 import {
   getPrintData,
 } from './print-helper';
 
-import { Button, Toggle, Printer, AdvancedControls, QrCodeUrlBar, QrCodeControls } from "./components";
+import { Button, Toggle, Printer, AdvancedControls, QrCodeUrlBar, QrCodeControls, ResetButton, NavButton } from "./components";
 import { Photo } from './model/Photo';
 import {
   ATKINSON,
@@ -170,6 +171,10 @@ function Hello() {
           <Button onClick={onClickPrintImage} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
           (or save as png)
         </div>
+        <nav id="back-home">
+          <NavButton onClick={onClickBackToHome} icon="home"></NavButton>
+          <NavButton onClick={onClickBackToHome} icon="help"></NavButton>
+        </nav>
       </div>
       <QrCodeControls
         ditherKernel={ditherKernel}
@@ -187,7 +192,7 @@ function Hello() {
       <div id="main">
         <div id="draggable-header-region"></div>
         <div id="controls">
-          <Button onClick={onClickBackToHome} label="<<"></Button>
+          <ResetButton></ResetButton>
           <Button label="change image" onClick={onClickSwitchPhoto}></Button>
           <Toggle onClick={() => { 
             setIsDitherOn(!isDitherOn)
@@ -200,6 +205,10 @@ function Hello() {
           <Button onClick={onClickPrintImage} label="PRINT!" fontSize={36} leftRightPadding={60} topBottomPadding={10} color='pink'></Button>
           (or save as png)
         </div>
+        <nav id="back-home">
+          <NavButton onClick={onClickBackToHome} icon="home"></NavButton>
+          <NavButton onClick={onClickBackToHome} icon="help"></NavButton>
+        </nav>
       </div>
       <AdvancedControls
         ditherKernel={ditherKernel}

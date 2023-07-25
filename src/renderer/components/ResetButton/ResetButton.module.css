@@ -1,0 +1,36 @@
+.component {
+  cursor: pointer;
+  padding: 0;
+  height: 25px;
+  width: 50px;
+  border: 0;
+  background-color: #E5F2D1;
+  border-radius: 50px;
+  display: block;
+  position: relative;
+}
+
+.component:hover::before {
+  transform: rotate(300deg);
+}
+.component:active::before {
+  transform: rotate(360deg);
+}
+
+
+
+.component::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  transform: rotate(180deg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(./reset-arrow.png);
+  background-size: 16px 16px;
+  transition: transform 250ms;
+}
+

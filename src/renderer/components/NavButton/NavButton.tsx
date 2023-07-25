@@ -1,17 +1,17 @@
 import React from "react";
 import styles from './NavButton.module.css'; // Import css modules stylesheet as styles
 
-export interface NavButtonProps {
-  type: "home"|"help";
+export interface NavButtonProps extends React.ComponentProps<"button"> {
+  icon: "home"|"help";
 }
 
 const NavButton = ({
-  type,
+  icon,
+  ...buttonProps
 }: NavButtonProps) => {
   const style = {
   }
-  return <div className={`${styles.component} ${styles[type]}`} style={style}>
-  </div>
+  return <button {...buttonProps} className={`${styles.component} ${styles[icon]}`} style={style}></button>
 }
 
 export default NavButton;

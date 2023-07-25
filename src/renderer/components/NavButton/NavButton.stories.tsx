@@ -12,12 +12,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Help: Story = {
   args: {
-    type: "help",
+    icon: "help",
   },
 };
 
 export const Home: Story = {
   args: {
-    type: "home",
+    icon: "home",
   },
 };

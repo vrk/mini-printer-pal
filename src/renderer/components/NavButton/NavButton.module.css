@@ -3,8 +3,8 @@
   background-color: white;
   border: 3px solid #C3846C;
   padding: 0;
-  height: 40px;
-  width: 40px;
+  height: 42px;
+  width: 42px;
   border-radius: 5px;
   box-shadow: -2px 2px 0px 0px #A6BF73;
   background-position: center;
@@ -23,11 +23,11 @@
 }
 
 .home {
-  background-image: url(./home.svg);
-  background-size: 20px 18px;
+  background-image: url(./home.png);
+  background-size: 18px 18px;
 }
 
 .help {
-  background-image: url(./confused.svg);
-  background-size: 13px 16px;
+  background-image: url(./confused.png);
+  background-size: 15px 18px;
 }
