@@ -36,7 +36,7 @@ function Hello() {
 
   const [qrCodeUrl, setQrCodeUrl] = useState("");
 
-  // phew this is really hacky
+  // whew this is really hacky
   const [shouldPromptSaveAfterLoad, setShouldPromptSaveAfterLoad] = useState(false);
 
   useEffect(() => {
