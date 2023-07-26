@@ -266,7 +266,7 @@ const createHelpDialog = (type: "edit"|"qr") => {
     },
   });
 
-  modalDialog.loadURL(resolveHtmlPath(type === "edit"? 'help-edit-image.html' : 'help-qr.html'));
+  modalDialog.loadURL(resolveHtmlPath(type === "edit"? 'help-edit-image.html' : 'help-qrcode.html'));
 
   modalDialog.on('ready-to-show', () => {
     modalDialog?.show();
