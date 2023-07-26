@@ -27,7 +27,7 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-let printDialog: BrowserWindow | null = null;
+let modalDialog: BrowserWindow | null = null;
 
 type Devices = {
   [key: string]: noble.Peripheral;
@@ -73,6 +73,14 @@ ipcMain.on('print-to-bluetooth', async (event, deviceName) => {
   });
 })
   
+ipcMain.on('open-help-image', async (event, data: number[]) => {
+  createHelpDialog('edit');
+})
+  
+ipcMain.on('open-help-qr', async (event, data: number[]) => {
+  createHelpDialog('qr');
+})
+
 async function getWritableCharacteristic(peripheral: noble.Peripheral) {
   await peripheral.connectAsync();
   const results = await peripheral.discoverAllServicesAndCharacteristicsAsync();
@@ -85,11 +93,19 @@ async function getWritableCharacteristic(peripheral: noble.Peripheral) {
 }
 
 ipcMain.on("close-print-dialog", async (event, arg) => {
-  if (!printDialog) {
+  if (!modalDialog) {
     return;
   }
-  printDialog.close();
-  printDialog = null;
+  modalDialog.close();
+  modalDialog = null;
+});
+
+ipcMain.on("close-modal-dialog", async (event, arg) => {
+  if (!modalDialog) {
+    return;
+  }
+  modalDialog.close();
+  modalDialog = null;
 });
 
 
@@ -166,6 +182,7 @@ const createWindow = async () => {
     }
   });
 
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -189,7 +206,7 @@ const createPrintDialog = () => {
     return;
   }
 
-  printDialog = new BrowserWindow({
+  modalDialog = new BrowserWindow({
     parent: mainWindow,
     modal: true,
     show: false,
@@ -204,18 +221,18 @@ const createPrintDialog = () => {
     },
   });
 
-  printDialog.loadURL(resolveHtmlPath('select-printer.html'));
+  modalDialog.loadURL(resolveHtmlPath('select-printer.html'));
 
-  printDialog.on('ready-to-show', () => {
-    printDialog?.show();
-    printDialog?.webContents.send('new-device', Object.keys(discoveredDevices));
+  modalDialog.on('ready-to-show', () => {
+    modalDialog?.show();
+    modalDialog?.webContents.send('new-device', Object.keys(discoveredDevices));
     noble.on('discover', async (peripheral) => {
       const { localName } = peripheral.advertisement;
       if (localName === undefined || localName.trim().length === 0) {
         return;
       }
       if (!discoveredDevices[localName]) {
-        printDialog?.webContents.send('new-device', [localName]);
+        modalDialog?.webContents.send('new-device', [localName]);
       }
       discoveredDevices[localName] = peripheral;
     });
@@ -223,9 +240,46 @@ const createPrintDialog = () => {
   });
 
 
-  printDialog.on('closed', async () => {
+  modalDialog.on('closed', async () => {
     await noble.stopScanningAsync();
-    printDialog = null;
+    modalDialog = null;
+  });
+};
+
+const createHelpDialog = (type: "edit"|"qr") => {
+  if (!mainWindow) {
+    return;
+  }
+
+  modalDialog = new BrowserWindow({
+    parent: mainWindow,
+    modal: true,
+    show: false,
+    backgroundColor: 'white', 
+    width: 700,
+    height: 700,
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  modalDialog.loadURL(resolveHtmlPath(type === "edit"? 'help-edit-image.html' : 'help-qr.html'));
+
+  modalDialog.on('ready-to-show', () => {
+    modalDialog?.show();
+  });
+
+
+  modalDialog.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
+  
+  modalDialog.on('closed', async () => {
+    modalDialog = null;
   });
 };
 

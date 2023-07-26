@@ -121,6 +121,14 @@ function Hello() {
     }
   };
 
+  const onClickHelpEdit = async () => {
+    window.electron.ipcRenderer.sendMessage('open-help-image');
+  };
+
+  const onClickHelpQr = async () => {
+    window.electron.ipcRenderer.sendMessage('open-help-qr');
+  };
+
   const onClickBackToHome = () => {
     setImageSrcData("")
     setCanvasDataSrc("");
@@ -179,7 +187,7 @@ function Hello() {
         </div>
         <nav id="back-home">
           <NavButton data-tooltip-top="main menu" onClick={onClickBackToHome} icon="home"></NavButton>
-          <NavButton data-tooltip-top="help" onClick={onClickBackToHome} icon="help"></NavButton>
+          <NavButton data-tooltip-top="help" onClick={onClickHelpQr} icon="help"></NavButton>
         </nav>
       </div>
       <QrCodeControls
@@ -213,7 +221,7 @@ function Hello() {
         </div>
         <nav id="back-home">
           <NavButton data-tooltip-top="main screen" onClick={onClickBackToHome} icon="home"></NavButton>
-          <NavButton onClick={onClickBackToHome} icon="help"></NavButton>
+          <NavButton onClick={onClickHelpEdit} icon="help"></NavButton>
         </nav>
       </div>
       <AdvancedControls

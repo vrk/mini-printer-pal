@@ -29,6 +29,7 @@ form {
 
 
 button {
+  cursor: pointer;
   text-align: center;
   font-family: 'Gaegu';
   font-size: 24px;

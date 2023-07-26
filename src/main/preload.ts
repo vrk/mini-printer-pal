@@ -8,6 +8,8 @@ export type Channels = 'ipc-example'|
   'print-file'|
   'quit'|
   'open-print-dialog'|
+  'open-help-image'|
+  'open-help-qr'|
   'print-to-bluetooth'|
   'save-to-png'|
   'close-print-dialog';

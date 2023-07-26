@@ -1,0 +1,57 @@
+ @font-face {
+  font-family: 'Gaegu';
+  src: url(./Gaegu-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  background: #FFF;
+  color: #000;
+  font-family: 'Gaegu';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border: 10px solid #FEE6F2;
+  justify-content: center;
+  align-items: center;
+}
+
+
+button {
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Gaegu';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #F15AA3;
+  border: 1px solid #D4126F;
+  background: #ffe6f2;
+  box-shadow: 0px -3px 0px 0px #F2A6CC inset, -2px 2px 0px 0px white inset;
+  width: 85px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+button:active {
+  box-shadow: 0px -3px 0px 0px white inset, -2px 2px 0px 0px #F2A6CC inset;
+}
+
+#help-caption {
+  width: min-content;
+}
+
+a {
+  color: #F15AA3;
+}
